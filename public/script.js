@@ -1,8 +1,8 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 const myPeer = new Peer(undefined, {
-  host: '/',
-  port: '3001'
+  host: 'arcane-peak-74802.herokuapp.com',
+  port: '9000'
 })
 const myVideo = document.createElement('video')
 myVideo.muted = true
