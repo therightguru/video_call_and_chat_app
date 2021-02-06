@@ -4,14 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <link type="stylesheet" href="css/main.css" rel="stylesheet"/>
   <script>
-    const ROOM_ID = "<%= roomId %>"
+    const ROOM_ID = "<%= data.roomId %>"
+    const JOINED_USER = "<%= data.joinedUser %>"
   </script>
-  <!-- <script defer src="https://unpkg.com/peerjs@1.2.0/dist/peerjs.min.js"></script> -->
   <script defer src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
   <script src="/socket.io/socket.io.js" defer></script>
   <script src="script.js" defer></script>
-  <title>Document</title>
+  <title>Video Call and Chat App</title>
   <style>
     #video-grid {
       display: grid;
@@ -28,5 +32,55 @@
 </head>
 <body>
   <div id="video-grid"></div>
+  <button id="muteButton" type="button">Mute Audio</button>
+  <button id="videoButton" type="button">Toggle Video</button>
+  <button id="shareScreen" type="button">Share Screen</button>
+  <button id="endCall" type="button">End Call</button>
+
+  <div class="chat">
+    <div class="chat__sidebar">
+      <h3>People</h3>
+      <div id="users"></div>
+      </div>
+      <div class="chat__main">
+          <ol id="messages" class="chat__messages"></ol>
+          <div class="chat__footer">
+              <form id="message-form">
+                  <input name="message" type="text" placeholder="Message" autofocus autocomplete="off" />
+                  <button>Send</button>
+              </form>
+              <button id="send-location">Send Location</button>
+          </div>
+      </div>
+
+    <script id="message-template" type="text/template">
+      <li class="message">
+          <div class="message__title">
+              <h4>{{from}}</h4>
+              <span>{{createdAt}}</span>
+          </div>
+          <div class="message__body">
+              <p>{{text}}</p>
+          </div> 
+      </li> 
+    </script>
+
+    <script id="location-template" type="text/template">
+      <li class="message">
+          <div class="message__title">
+              <h4>{{from}}</h4>
+              <span>{{createdAt}}</span>
+          </div>
+          <div class="message__body">
+              <a href="{{url}}" target="_blank"><p>My Current Location</p></a>
+          </div> 
+      </li>
+    </script>
+  </div>
+
+  <script src="js/moment.js"></script>
+  <script src="js/mustache.js"></script>
+  <!-- <script src="js/chat.js"></script> -->
+  <script src="js/deparam.js"></script>
 </body>
 </html>
