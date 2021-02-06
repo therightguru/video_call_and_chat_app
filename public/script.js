@@ -1,10 +1,9 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
-const myPeer = new Peer(undefined, {
-  // host: 'arcane-peak-74802.herokuapp.com',
-  port: '443',
+const myPeer = new Peer('peerId', {
+  secure: true,
   host: '/',
-  // port: '3001'
+  port: '443',
 })
 
 // let django_socket = new WebSocket(`ws://localhost:8000/ws/video_call/edustart/`)
