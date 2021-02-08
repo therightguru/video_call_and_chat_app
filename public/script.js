@@ -5,9 +5,9 @@ const myPeer = new Peer({
   host: 'peerjs-server.herokuapp.com',
   port: '443',
   config: { 'iceServers': [
-    { 'urls': 'stun:stun.l.google.com:19302' },
-    { 'urls': 'turn:numb.viagenie.ca', 'username': 'kunalkashyap855@gmail.com', 'credential': 'asssrktv' }
-  ],'sdpSemantics': 'unified-plan' }
+    { 'urls': 'stun:stun.koibhidedobhai.online:5349' },
+    { 'urls': 'turn:turn.koibhidedobhai.online:5349', 'username': 'kunalkashyap', 'credential': 'kunalvidip9808' }
+  ]}
 })
 
 // let django_socket = new WebSocket(`ws://localhost:8000/ws/video_call/edustart/`)
