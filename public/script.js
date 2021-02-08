@@ -5,8 +5,8 @@ const myPeer = new Peer({
   host: 'peerjs-server.herokuapp.com',
   port: '443',
   config: { 'iceServers': [
-    { 'urls': 'stun:stun.koibhidedobhai.online:5349' },
-    { 'urls': 'turn:turn.koibhidedobhai.online:5349', 'username': 'kunalkashyap', 'credential': 'kunalvidip9808' }
+    { 'urls': 'stun:stun.koibhidedobhai.online:3478' },
+    { 'urls': 'turn:turn.koibhidedobhai.online:3478', 'username': 'kunalkashyap', 'credential': 'kunalvidip9808' }
   ]}
 })
 
@@ -91,13 +91,25 @@ document.getElementById("shareScreen")
   .addEventListener("click", function() {
     navigator.mediaDevices.getDisplayMedia({cursor:true})
     .then(screenStream=>{
-      myPeer.current.replaceTrack(callStream.getVideoTracks()[0],screenStream.getVideoTracks()[0], callStream)
-      userVideo.current.srcObject=screenStream
+      Object.values(peers).map(peer => {
+        peer.peerConnection?.getSenders().map(sender => {
+            if(sender.track.kind == "video") {
+                    sender.replaceTrack(screenStream.getVideoTracks()[0]);
+            }
+        })
+      });
+      myVideo.srcObject=screenStream
       screenStream.getTracks()[0].onended = () => {
-        myPeer.current.replaceTrack(screenStream.getVideoTracks()[0],callStream.getVideoTracks()[0], callStream)
-        userVideo.current.srcObject=callStream
+        Object.values(peers).map(peer => {
+          peer.peerConnection?.getSenders().map(sender => {
+              if(sender.track.kind == "video") {
+                      sender.replaceTrack(callStream.getVideoTracks()[0]);
+              }
+          })
+        });
+        myVideo.srcObject=callStream
       }
-    })
+  })
 })
 
 // End Call
