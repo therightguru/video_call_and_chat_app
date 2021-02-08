@@ -7,7 +7,7 @@ const myPeer = new Peer({
   config: { 'iceServers': [
     { 'urls': 'stun:stun.koibhidedobhai.online:3478' },
     { 'urls': 'turn:turn.koibhidedobhai.online:3478', 'username': 'kunalkashyap', 'credential': 'kunalvidip9808' }
-  ]}
+  ],'sdpSemantics': 'unified-plan' }
 })
 
 // let django_socket = new WebSocket(`ws://localhost:8000/ws/video_call/edustart/`)
