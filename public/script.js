@@ -5,8 +5,8 @@ const myPeer = new Peer({
   host: 'peerjs-server.herokuapp.com',
   port: '443',
   config: { 'iceServers': [
-    { 'urls': 'stun:stun.koibhidedobhai.online:3478' },
-    { 'urls': 'turn:turn.koibhidedobhai.online:3478', 'username': 'kunalkashyap', 'credential': 'kunalvidip9808' }
+    { 'urls': 'stun:stun.therightguru.com:3478' },
+    { 'urls': 'turn:turn.therightguru.com:3478', 'username': 'admin', 'credential': 'therightguru' }
   ],'sdpSemantics': 'unified-plan' }
 })
 
@@ -15,8 +15,8 @@ const myVideo = document.createElement('video')
 myVideo.muted = true
 const peers = {}
 let callStream
-var audioMuted = false
-var videoMuted = false
+var audioEnabled = true
+var videoEnabled = true
 navigator.mediaDevices.getUserMedia({
   video: true,
   audio: true
@@ -30,6 +30,8 @@ navigator.mediaDevices.getUserMedia({
     call.on('stream', userVideoStream => {
       addVideoStream(video, userVideoStream)
     })
+
+    peers[call.peer] = call
   })
 
   socket.on('user-connected', userId => {
@@ -70,8 +72,8 @@ function addVideoStream(video, stream) {
 document.getElementById("muteButton")
   .addEventListener("click", function() {
     if(callStream){
-      audioMuted = !audioMuted
-      callStream.getAudioTracks()[0].enabled = audioMuted
+      audioEnabled = !audioEnabled
+      callStream.getAudioTracks()[0].enabled = audioEnabled
       console.info("Mute Button running")
     }
   })
@@ -80,8 +82,8 @@ document.getElementById("muteButton")
 document.getElementById("videoButton")
   .addEventListener("click", function() {
     if(callStream){
-      videoMuted = !videoMuted
-      callStream.getVideoTracks()[0].enabled = videoMuted
+      videoEnabled = !videoEnabled
+      callStream.getVideoTracks()[0].enabled = videoEnabled
       console.info("Video Button running")
     }
 })
@@ -94,7 +96,8 @@ document.getElementById("shareScreen")
       Object.values(peers).map(peer => {
         peer.peerConnection?.getSenders().map(sender => {
             if(sender.track.kind == "video") {
-                    sender.replaceTrack(screenStream.getVideoTracks()[0]);
+              sender.replaceTrack(screenStream.getVideoTracks()[0])
+              .then(res => console.log(res));
             }
         })
       });
