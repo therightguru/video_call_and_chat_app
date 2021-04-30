@@ -119,7 +119,14 @@ document.getElementById("shareScreen")
 document.getElementById("endCall")
   .addEventListener("click", function() {
     myPeer.destroy()
-    console.log("End Call called")
+    if (JOINED_USER.includes("ES")){
+      window.location.replace("localhost:3000/student-dashboard")
+    } else if (JOINED_USER.includes("TC")) {
+      window.location.replace("localhost:3000/teacher-dashboard")
+    } else {
+      window.location.replace("localhost:3000")
+    }
+    
     // socket.current.emit('close',{to:caller})
   })
 
