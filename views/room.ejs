@@ -24,18 +24,21 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --primary_color: #ec3545;
+    }
+
     body {
       overflow: hidden;
     }
 
     #main #video-grid {
       position: absolute;
-      right: 0;
-      bottom: 0;
-      height: 60px;
-      width: 90px;
+      right: 20px;
+      bottom: 10px;
+      height: 110px;
+      width: 150px;
       z-index: 100;
-      margin: 0 10px 10px 0;
       transition: 0.4s linear;
     }
     
@@ -55,6 +58,11 @@
       transition: width 0.4s linear;
     }
     
+    .logo {
+      color: white;
+      width: 250px;
+      margin-left: 20px;
+    }
     .icons1 {
       list-style-type: none;
       display: flex;
@@ -67,7 +75,7 @@
       position: absolute;
       justify-content: space-around;
       bottom: 10px;
-      width: 400px;
+      width: 450px;
       margin-left: 30%;
     }
 
@@ -106,6 +114,11 @@
     .fa-phone-slash {
       transform: translate(8px, 1px) !important;
     }
+
+    .fa-fist-raised {
+      transform: translate(13px,0) !important;
+      font-size: 22px !important;
+    }
     
     #sidebar {
       position: absolute;
@@ -140,44 +153,38 @@
     }
 
     #close {
-      background-color: rgb(180, 68, 130);
+      background-color: var(--primary_color);
       height: 70%;
+      width: 60px;
       margin-top: 10px;
       opacity: 1;
       border-bottom-left-radius: 40px;
       border-top-left-radius: 40px;
       position: absolute;
       right: 0;
+      padding: 7.5px 0;
     }
 
-    #close i {
-      color: white !important;
-      margin-top: 6px;
-    }
-
-    #close:hover {
-      opacity: 1;
+    #close-icon {
+      color: white;
     }
 
     #open {
       display: none;
-      background-color: rgb(180, 68, 130);
+      background-color: var(--primary_color);
       height: 70%;
+      width: 60px;
       margin-top: 10px;
       opacity: 1;
       border-bottom-left-radius: 40px;
       border-top-left-radius: 40px;
       position: absolute;
       right: 0;
+      padding: 7.5px 0;
     }
 
-    #open i {
-      color: white !important;
-      margin-top: 6px;
-    }
-
-    #open:hover {
-      opacity: 1;
+    #open-icon {
+      color: white;
     }
 
     .options i {
@@ -188,12 +195,12 @@
     }
 
     .active-tab {
-      border-bottom: 4px solid rgb(180, 68, 130);
+      border-bottom: 4px solid var(--primary_color);
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     }
 
     .active-tab i {
-      color: pink;
+      color: var(--primary_color);
     }
 
     .chat {
@@ -217,7 +224,7 @@
 
     .message-header {
       width: 100%;
-      padding: 10px;
+      padding: 10px 10px 10px 25px;
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
       margin-bottom: 20px;
     }
@@ -228,12 +235,24 @@
 
     #users li {
       line-height: 30px;
-      width: 100%;
-      padding-left: 20px;
+      margin: 0 10px 0 25px;
+      padding-left: 15px;
     }
 
     #users li:nth-child(odd){
       background-color: rgba(165, 158, 158, 0.1);
+    }
+
+    .teacher {
+      border-bottom: 3px solid black;
+      margin: 10px 10px 10px 25px;
+      height: 28px;
+    }
+
+    .students {
+      border-bottom: 3px solid black;
+      margin: 50px 10px 10px 25px;
+      height: 28px;
     }
 
     #message-form {
@@ -268,7 +287,7 @@
     }
 
     .message {
-      padding: 0 10px;
+      padding: 0 10px 0 25px;
     }
 
     .message__title {
@@ -292,6 +311,10 @@
       <li><i class="fas fa-text-width"></i></li>
     </ul>
   -->
+
+    <div class="logo">
+      <h2>The Right Guru</h2>
+    </div>
     <ul class="icons2">
       <li><button id="muteButton" type="button" class="circle-icon">
         <i id="mic" class="fas fa-microphone-slash "></i>
@@ -301,6 +324,9 @@
       </button></li>
       <li><button id="shareScreen" type="button" class="circle-icon">
         <i class="fas fa-share-square "></i>
+      </button></li>
+      <li><button type="button" class="circle-icon">
+        <i class="fas fa-fist-raised"></i>
       </button></li>
       <li><button style="background-color: rgb(185, 13, 13);"  id="endCall" type="button" class="circle-icon">
         <i class="fas fa-phone-slash"></i>
@@ -316,6 +342,12 @@
       <div class="message-header">
         <h4 style="font-weight: 700;">Attendees</h4>
       </div>
+      <div class="teacher">
+        <p style="font-size: 17px;">Teacher</p>
+      </div>
+      <div class="students">
+        <p style="font-size: 17px;">Students</p>
+      </div>
       <div id="users">
       </div>
     </div>
@@ -323,7 +355,7 @@
     <div class="chat" id="chat">
         <div class="chat__main">
           <div class="message-header">
-            <h4 style="font-weight: 700;">Everyone</h4>
+            <h4 style="font-weight: 700;">Chat Box</h4>
           </div>
             <ol id="messages" class="chat__messages"></ol>
             <div class="chat__footer">
@@ -337,7 +369,7 @@
       <script id="message-template" type="text/template">
         <li class="message">
             <div class="message__title">
-                <h5 style="font-weight: 600;">{{from}}</h5>
+                <h5 style="font-weight: 600; color: #ec3545">{{from}}</h5>
                 <span>{{createdAt}}</span>
             </div>
             <div class="message__body">
