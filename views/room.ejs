@@ -139,7 +139,11 @@
       transform: translate(13px,0) !important;
       font-size: 22px !important;
     }
-    
+
+    .fistup {
+      background-color: var(--primary_color);
+    }
+
     #sidebar {
       position: absolute;
       right: 0;
@@ -315,6 +319,42 @@
       justify-content: space-between;
       align-items: center;
     }
+
+    .popup {
+      position: absolute;
+      top: 40px;
+      left: 42%;
+      display: inline-block;
+      cursor: pointer;
+      
+    }
+
+    .popup .popuptext {
+      visibility: hidden;
+      width: 160px;
+      background-color: white;
+      color: black;
+      text-align: center;
+      border-radius: 6px;
+      z-index: 1;
+    }
+
+    .popup .show {
+      visibility: visible;
+      -webkit-animation: fadeIn 1s;
+      animation: fadeIn 1s;
+    }
+
+    @-webkit-keyframes fadeIn {
+      from {opacity: 0;} 
+      to {opacity: 1;}
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity:1 ;}
+    }
+
   </style>
 
 </head>
@@ -335,6 +375,9 @@
     <div class="logo">
       <h2>The Right Guru</h2>
     </div>
+    <div class="popup">
+      <span class="popuptext" id="myPopup"></span>
+    </div>
     <ul class="icons2">
       <li><button id="muteButton" type="button" class="circle-icon">
         <i id="mic" class="fas fa-microphone-slash "></i>
@@ -345,7 +388,7 @@
       <li><button id="shareScreen" type="button" class="circle-icon">
         <i class="fas fa-share-square "></i>
       </button></li>
-      <li><button type="button" class="circle-icon" id="hand-raise">
+      <li><button onclick="handRaise()" type="button" class="circle-icon" id="hand-raise">
         <i class="fas fa-fist-raised"></i>
       </button></li>
       <li><button style="background-color: rgb(185, 13, 13);"  id="endCall" type="button" class="circle-icon">
@@ -502,6 +545,10 @@
         return;
       }
     })
+
+    function handRaise() {
+      document.getElementById('hand-raise').classList.toggle('fistup');
+    }
   </script>
 
   <script src="js/moment.js"></script>
