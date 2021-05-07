@@ -1,5 +1,6 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
+const teacherVideo = document.getElementById('teacher-video')
 const myPeer = new Peer({
   secure: true,
   host: 'peerjs-server.herokuapp.com',
@@ -22,7 +23,11 @@ navigator.mediaDevices.getUserMedia({
   audio: true
 }).then(stream => {
   callStream = stream
-  addVideoStream(myVideo, stream)
+  if(JOINED_USER.includes("TC")) {
+    addVideoStreamTeacher(myVideo, stream)
+  } else {
+    addVideoStream(myVideo, stream)
+  }
 
   myPeer.on('call', call => {
     call.answer(stream)
@@ -34,8 +39,8 @@ navigator.mediaDevices.getUserMedia({
     peers[call.peer] = call
   })
 
-  socket.on('user-connected', userId => {
-    connectToNewUser(userId, stream)
+  socket.on('user-connected', (joinedUser, userId) => {
+    connectToNewUser(joinedUser, userId, stream)
   })
 })
 
@@ -44,14 +49,18 @@ socket.on('user-disconnected', userId => {
 })
 
 myPeer.on('open', id => {
-  socket.emit('join-room', ROOM_ID, id)
+  socket.emit('join-room', ROOM_ID, JOINED_USER, id)
 })
 
-function connectToNewUser(userId, stream) {
+function connectToNewUser(joinedUser, userId, stream) {
   const call = myPeer.call(userId, stream)
   const video = document.createElement('video')
   call.on('stream', userVideoStream => {
-    addVideoStream(video, userVideoStream)
+    if(joinedUser.includes("TC")){
+      addVideoStreamTeacher(video, userVideoStream)
+    } else {
+      addVideoStream(video, userVideoStream)
+    }
   })
   call.on('close', () => {
     video.remove()
@@ -66,6 +75,14 @@ function addVideoStream(video, stream) {
     video.play()
   })
   videoGrid.append(video)
+}
+
+function addVideoStreamTeacher(video, stream) {
+  video.srcObject = stream
+  video.addEventListener('loadedmetadata', () => {
+    video.play()
+  })
+  teacherVideo.append(video)
 }
 
 // Toggle audio
@@ -121,7 +138,7 @@ document.getElementById("endCall")
     myPeer.destroy()
     if (JOINED_USER.includes("ES")){
       window.location.replace("https://therightguru.com/student-dashboard")
-    } else if (JOINED_USER.includes("TS")) {
+    } else if (JOINED_USER.includes("TC")) {
       window.location.replace("https://therightguru.com/teacher-dashboard")
     } else {
       window.location.replace("https://therightguru.com")
@@ -131,7 +148,7 @@ document.getElementById("endCall")
   })
 
 
-// JavaScript fro chat functionality 
+// JavaScript for chat functionality 
 
 function scrollToBottom(){
   var messages = jQuery('#messages');
@@ -209,6 +226,33 @@ jQuery('#message-form').on('submit', function(e){
        messageTextbox.val('')
   }); 
 });
+
+var isHandRaised = false;
+document.getElementById("hand-raise")
+  .addEventListener("click", function() {
+    isHandRaised = !isHandRaised;
+    if(isHandRaised) {
+      socket.emit('raiseHand', {
+        raisedBy: JOINED_USER,
+        text: "Hand raised by student"
+      });
+    }
+  });
+
+socket.on('handRaised', function(message) {
+
+  var mess = jQuery('<p></p>');
+  mess.append(message);
+  jQuery('#myPopup').html(mess);
+
+  var popup = document.getElementById('myPopup');
+  popup.classList.add('show');
+
+  setTimeout(function(){
+    document.getElementById('myPopup').classList.remove('show');
+  }, 5000);
+
+})
 
 var locationButton = jQuery('#send-location');
 locationButton.on('click', function(e){

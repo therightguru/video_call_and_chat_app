@@ -1,7 +1,7 @@
 [{
     id: '/#12poiajdspfoif',
-    name: 'Arjun',
-    room: 'The Office Fans'
+    name: 'Kunal',
+    room: 'Cricket Fans'
 }]
 
 class Users{
