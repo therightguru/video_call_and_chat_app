@@ -34,17 +34,18 @@
 
     #main #video-grid {
       position: absolute;
-      right: 20px;
-      bottom: 10px;
+      bottom: 80px;
       height: 110px;
-      width: 150px;
+      width: 100%;
       z-index: 100;
+      display: flex;
+      justify-content: space-around;
       transition: 0.4s linear;
     }
     
-    video {
-      width: 100%;
-      height: 100%;
+    #main #video-grid video {
+      width: 150px;
+      height: 110px;
       object-fit: cover;
     }
     
@@ -57,11 +58,30 @@
       height: 100vh;
       transition: width 0.4s linear;
     }
+
+    #main #teacher-video {
+      position: absolute;
+      top: 36px;
+      width: 100%;
+      height: 360px;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+    }
+
+    #main #teacher-video video {
+      width: 800px;
+      height: 480px;
+      object-fit: cover;
+    }
     
     .logo {
       color: white;
       width: 250px;
       margin-left: 20px;
+      z-index: 200;
+      position: absolute;
+      bottom: 20px;
     }
     .icons1 {
       list-style-type: none;
@@ -325,13 +345,15 @@
       <li><button id="shareScreen" type="button" class="circle-icon">
         <i class="fas fa-share-square "></i>
       </button></li>
-      <li><button type="button" class="circle-icon">
+      <li><button type="button" class="circle-icon" id="hand-raise">
         <i class="fas fa-fist-raised"></i>
       </button></li>
       <li><button style="background-color: rgb(185, 13, 13);"  id="endCall" type="button" class="circle-icon">
         <i class="fas fa-phone-slash"></i>
       </button></li>
     </ul>
+
+    <div id="teacher-video"></div>
       
     <div id="video-grid"></div>
     

@@ -51,6 +51,14 @@ io.on('connection', socket => {
     callback();
   });
 
+  socket.on('raiseHand', (message) => {
+    var user = users.getUser(socket.id);
+
+    if(user && isRealString(message.text)) {
+      io.to(user.room).emit('handRaised', `Hand raised by ${message.raisedBy}`);//emits an event to every connectione
+    }
+  })
+
   socket.on('createLocationMessage', (coords) => {
       var user = users.getUser(socket.id);
       
@@ -70,9 +78,9 @@ io.on('connection', socket => {
   });
 
   // For webRTC
-  socket.on('join-room', (roomId, userId) => {
+  socket.on('join-room', (roomId, joinedUser, userId) => {
     socket.join(roomId)
-    socket.to(roomId).broadcast.emit('user-connected', userId)
+    socket.to(roomId).broadcast.emit('user-connected', joinedUser, userId)
 
     // socket.on('close', (data)=>{
     //   io.to(users[data.to]).emit('close')
