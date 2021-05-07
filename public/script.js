@@ -240,10 +240,18 @@ document.getElementById("hand-raise")
   });
 
 socket.on('handRaised', function(message) {
-  console.log(message);
-  // get HTML element
 
-  // Append message in the HTML element
+  var mess = jQuery('<p></p>');
+  mess.append(message);
+  jQuery('#myPopup').html(mess);
+
+  var popup = document.getElementById('myPopup');
+  popup.classList.add('show');
+
+  setTimeout(function(){
+    document.getElementById('myPopup').classList.remove('show');
+  }, 5000);
+
 })
 
 var locationButton = jQuery('#send-location');
