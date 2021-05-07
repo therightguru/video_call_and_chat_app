@@ -120,11 +120,11 @@ document.getElementById("endCall")
   .addEventListener("click", function() {
     myPeer.destroy()
     if (JOINED_USER.includes("ES")){
-      window.location.replace("localhost:3000/student-dashboard")
-    } else if (JOINED_USER.includes("TC")) {
-      window.location.replace("localhost:3000/teacher-dashboard")
+      window.location.replace("https://therightguru.com/student-dashboard")
+    } else if (JOINED_USER.includes("TS")) {
+      window.location.replace("https://therightguru.com/teacher-dashboard")
     } else {
-      window.location.replace("localhost:3000")
+      window.location.replace("https://therightguru.com")
     }
     
     // socket.current.emit('close',{to:caller})
