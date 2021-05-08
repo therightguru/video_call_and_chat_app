@@ -32,7 +32,7 @@
       overflow: hidden;
     }
 
-    #main #video-grid {
+    #main .video-grid {
       position: absolute;
       bottom: 80px;
       height: 110px;
@@ -43,7 +43,7 @@
       transition: 0.4s linear;
     }
     
-    #main #video-grid video {
+    #main .video-grid video {
       width: 150px;
       height: 110px;
       object-fit: cover;
@@ -62,7 +62,7 @@
     #main #teacher-video {
       position: absolute;
       top: 36px;
-      width: 100%;
+      width: 50%;
       height: 360px;
       z-index: 100;
       display: flex;
@@ -72,6 +72,20 @@
     #main #teacher-video video {
       width: 800px;
       height: 480px;
+      object-fit: cover;
+    }
+
+    #main .share-screen {
+      position: absolute;
+      top: 36px;
+      right: 10px;
+      width: 50%;
+      height: 360px;
+    }
+
+    #main .share-screen video {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
     }
     
@@ -174,6 +188,15 @@
       display: flex;
       align-items: center;
       cursor: pointer;
+    }
+
+    #red-dot {
+      display: none;
+      position: absolute;
+      left: 13px;
+      top: 14px;
+      font-size: 10px !important;
+      color: red !important;
     }
 
     #close {
@@ -380,10 +403,10 @@
     </div>
     <ul class="icons2">
       <li><button id="muteButton" type="button" class="circle-icon">
-        <i id="mic" class="fas fa-microphone-slash "></i>
+        <i id="mic" class="fas fa-microphone "></i>
       </button></li>
       <li><button id="videoButton" type="button" class="circle-icon">
-        <i id="video" class="fas fa-video-slash "></i>
+        <i id="video" class="fas fa-video "></i>
       </button></li>
       <li><button id="shareScreen" type="button" class="circle-icon">
         <i class="fas fa-share-square "></i>
@@ -396,9 +419,8 @@
       </button></li>
     </ul>
 
-    <div id="teacher-video"></div>
-      
-    <div id="video-grid"></div>
+    <div id="teacher-video" ></div>
+    <div id="video-grid" class="video-grid"></div>
     
   </div>
 
@@ -458,7 +480,10 @@
 
     <div class="options">
       <ul class="icons3">
-        <li onclick="comment()" id="comment"><i class="far fa-comment-dots"></i></li>
+        <li onclick="comment()" id="comment" style="position: relative;">
+          <i class="far fa-comment-dots"></i>
+          <i id="red-dot" class="fas fa-circle"></i>
+        </li>
         <li onclick="user()" id="user" class="active-tab"><i class="fas fa-user-friends"></i></li>
         <li onclick="settings()" id="settings"><i class="fas fa-cog"></i></li>
         <li id="close"><i id="close-icon" class="fas fa-times"></i></li>
@@ -477,6 +502,8 @@
 
       document.getElementById("chat__sidebar").style.display = "none";
       document.getElementById("chat").style.display = "block";
+      on_message_tab = true;
+      document.getElementById("red-dot").style.display = "none";
     }
 
     function user() {
@@ -487,6 +514,7 @@
 
       document.getElementById("chat__sidebar").style.display = "block";
       document.getElementById("chat").style.display = "none";
+      on_message_tab = false;
     }
 
     function settings() {
@@ -497,6 +525,7 @@
 
       document.getElementById("chat__sidebar").style.display = "none";
       document.getElementById("chat").style.display = "none";
+      on_message_tab = false;
     }
 
     document.getElementById("close").addEventListener("click", function() {

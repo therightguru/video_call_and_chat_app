@@ -105,6 +105,7 @@ document.getElementById("videoButton")
     }
 })
 
+
 // Share screen
 document.getElementById("shareScreen")
   .addEventListener("click", function() {
@@ -119,11 +120,12 @@ document.getElementById("shareScreen")
         })
       });
       myVideo.srcObject=screenStream
+
       screenStream.getTracks()[0].onended = () => {
         Object.values(peers).map(peer => {
           peer.peerConnection?.getSenders().map(sender => {
               if(sender.track.kind == "video") {
-                      sender.replaceTrack(callStream.getVideoTracks()[0]);
+                sender.replaceTrack(callStream.getVideoTracks()[0]);
               }
           })
         });
@@ -190,6 +192,8 @@ socket.on('updateUserList', function(users){
   jQuery('#users').html(ol);
 });
 
+let on_message_tab = false;
+
 socket.on('newMessage', function(message){
 
   var formattedTime = moment(message.createdAt).format('h:mm a');
@@ -201,6 +205,13 @@ socket.on('newMessage', function(message){
   });
   jQuery('#messages').append(html);
   scrollToBottom(); 
+
+  if(on_message_tab) {
+    document.getElementById("red-dot").style.display = "none";
+  }
+  else {
+    document.getElementById("red-dot").style.display = "block";
+  }
 });
 
 socket.on('newLocationMessage', function(message){
