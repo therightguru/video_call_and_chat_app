@@ -59,17 +59,17 @@
       transition: width 0.4s linear;
     }
 
-    #main #teacher-video {
+    #main .teacher-video {
       position: absolute;
       top: 36px;
-      width: 50%;
+      width: 100%;
       height: 360px;
       z-index: 100;
       display: flex;
       justify-content: center;
     }
 
-    #main #teacher-video video {
+    #main .teacher-video video {
       width: 800px;
       height: 480px;
       object-fit: cover;
@@ -78,7 +78,7 @@
     #main .share-screen {
       position: absolute;
       top: 36px;
-      right: 10px;
+      right: 5%;
       width: 50%;
       height: 360px;
     }
@@ -433,7 +433,7 @@
       </button></li>
     </ul>
 
-    <div id="teacher-video" ></div>
+    <div id="teacher-video" class="teacher-video"></div>
     <div id="video-grid" class="video-grid"></div>
     
   </div>
