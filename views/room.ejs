@@ -276,17 +276,31 @@
       margin-bottom: 20px;
     }
 
-    #users ol {
+    #susers ol {
       padding-left: 0;
     }
 
-    #users li {
+    #susers li {
       line-height: 30px;
       margin: 0 10px 0 25px;
       padding-left: 15px;
     }
 
-    #users li:nth-child(odd){
+    #susers li:nth-child(odd){
+      background-color: rgba(165, 158, 158, 0.1);
+    }
+
+    #tusers ol {
+      padding-left: 0;
+    }
+
+    #tusers li {
+      line-height: 30px;
+      margin: 0 10px 0 25px;
+      padding-left: 15px;
+    }
+
+    #tusers li:nth-child(odd){
       background-color: rgba(165, 158, 158, 0.1);
     }
 
@@ -432,10 +446,12 @@
       <div class="teacher">
         <p style="font-size: 17px;">Teacher</p>
       </div>
+      <div id="tusers">
+      </div>
       <div class="students">
         <p style="font-size: 17px;">Students</p>
       </div>
-      <div id="users">
+      <div id="susers">
       </div>
     </div>
 

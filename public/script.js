@@ -184,12 +184,18 @@ socket.on('disconnect', function(){
 });
 
 socket.on('updateUserList', function(users){
-  var ol = jQuery('<ol></ol>');
+  var tol = jQuery('<ol></ol>');
+  var sol = jQuery('<ol></ol>');
   users.forEach(function(user){
-      ol.append(jQuery('<li></li>').text(user));
+    if(user.includes("TC")) {
+      tol.append(jQuery('<li></li>').text(user));
+    } else {
+      sol.append(jQuery('<li></li>').text(user));
+    }
   });
 
-  jQuery('#users').html(ol);
+  jQuery('#susers').html(sol);
+  jQuery('#tusers').html(tol);
 });
 
 let on_message_tab = false;
