@@ -121,7 +121,26 @@ document.getElementById("shareScreen")
       });
       myVideo.srcObject=screenStream
 
+      if(JOINED_USER.includes("TC")) {
+        teacherVideo.classList.add('share-screen');
+        teacherVideo.classList.remove('teacher-video');
+      }
+      else {
+        videoGrid.classList.add('share-screen');
+        videoGrid.classList.remove('video-grid');
+      }
+
       screenStream.getTracks()[0].onended = () => {
+
+        if(JOINED_USER.includes("TC")) {
+          teacherVideo.classList.remove('share-screen');
+          teacherVideo.classList.add('teacher-video');
+        }
+        else {
+          videoGrid.classList.remove('share-screen');
+          videoGrid.classList.add('video-grid');
+        }
+
         Object.values(peers).map(peer => {
           peer.peerConnection?.getSenders().map(sender => {
               if(sender.track.kind == "video") {
