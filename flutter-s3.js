@@ -1,6 +1,6 @@
 const { v4: uuidV4 } = require('uuid')
 const AWS = require("aws-sdk");
-const awsConfig = require("./config-aws");
+const awsConfig = require("./config-s3");
 
 AWS.config.update({ region: awsConfig.region });
 
