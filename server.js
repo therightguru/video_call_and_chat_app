@@ -7,6 +7,7 @@ const { v4: uuidV4 } = require('uuid')
 const {generateMessage, generateLocationMessage} = require('./utils/message');
 const {isRealString} = require('./utils/validation');
 const {Users} = require('./utils/users');
+const { getPresignedUrl } = require('./flutter-s3');
 
 var users = new Users();
 
@@ -20,6 +21,8 @@ app.get('/', (req, res) => {
 app.get('/:room&:joinedUser', (req, res) => {
   res.render('room', { data: { roomId: req.params.room, joinedUser: req.params.joinedUser }})
 })
+
+app.post("/generatePresignedUrl", (req, res) => getPresignedUrl(req, res));
 
 io.on('connection', socket => {
   // For chat
