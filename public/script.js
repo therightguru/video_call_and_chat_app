@@ -233,6 +233,9 @@ socket.on('newMessage', function(message){
   jQuery('#messages').append(html);
   scrollToBottom(); 
 
+  var myDiv = document.getElementById("chat");
+  myDiv.scrollTop = myDiv.scrollHeight;
+
   if(on_message_tab) {
     document.getElementById("red-dot").style.display = "none";
   }
