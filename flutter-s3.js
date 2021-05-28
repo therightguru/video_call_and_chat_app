@@ -15,7 +15,9 @@ const s3 = new AWS.S3({
 });
 
 const getPresignedUrl = (req, res) => {
-  let fileType = req.body.fileType;
+ console.log("BODY: ", req.body);
+ console.log(req.body.fileType); 
+ let fileType = req.body.fileType;
 //   if (fileType != ".jpg" && fileType != ".png" && fileType != ".jpeg") {
 //     return res
 //       .status(403)
@@ -30,7 +32,7 @@ const getPresignedUrl = (req, res) => {
     Key: fileName + "." + fileType,
     // Expires: 60 * 60,
     ContentType: "application/" + fileType,
-    // ACL: "public-read",
+    ACL: "public-read",
   };
 
   s3.getSignedUrl("putObject", s3Params, (err, data) => {
