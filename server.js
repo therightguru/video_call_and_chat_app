@@ -12,6 +12,7 @@ const { getPresignedUrl } = require('./flutter-s3');
 var users = new Users();
 
 app.set('view engine', 'ejs')
+app.use(express.json());
 app.use(express.static('public'))
 
 app.get('/', (req, res) => {
