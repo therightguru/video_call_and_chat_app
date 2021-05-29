@@ -23,7 +23,7 @@ navigator.mediaDevices.getUserMedia({
   audio: true
 }).then(stream => {
   callStream = stream
-  if(JOINED_USER.includes("TC")) {
+  if(JOINED_USER.includes("TC_")) {
     addVideoStreamTeacher(myVideo, stream)
   } else {
     addVideoStream(myVideo, stream)
@@ -35,7 +35,7 @@ navigator.mediaDevices.getUserMedia({
     call.on('stream', userVideoStream => {
       addVideoStream(video, userVideoStream)
     })
-
+    console.log("2", peers)
     peers[call.peer] = call
   })
 
@@ -56,7 +56,7 @@ function connectToNewUser(joinedUser, userId, stream) {
   const call = myPeer.call(userId, stream)
   const video = document.createElement('video')
   call.on('stream', userVideoStream => {
-    if(joinedUser.includes("TC")){
+    if(joinedUser.includes("TC_")){
       addVideoStreamTeacher(video, userVideoStream)
     } else {
       addVideoStream(video, userVideoStream)
@@ -65,8 +65,7 @@ function connectToNewUser(joinedUser, userId, stream) {
   call.on('close', () => {
     video.remove()
   })
-
-  peers[userId] = call
+  peers[userId] = { call, joinedUser }
 }
 
 function addVideoStream(video, stream) {

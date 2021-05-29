@@ -96,4 +96,4 @@ io.on('connection', socket => {
   })
 })
 
-server.listen(process.env.PORT || 5050)
+server.listen(process.env.PORT || 5050, () => console.log("Server has started"))
