@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link type="stylesheet" href="css/main.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css" type="text/css">
   <script>
     const ROOM_ID = "<%= data.roomId %>"
     const JOINED_USER = "<%= data.joinedUser %>"
@@ -17,527 +18,135 @@
   <script src="/socket.io/socket.io.js" defer></script>
   <script src="script.js" defer></script>
   <title>Video Call and Chat App</title>
-
-  <!--Inline CSS-->
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    :root {
-      --primary_color: #ec3545;
-    }
-
-    body {
-      overflow: hidden;
-    }
-
-    .video-grid::-webkit-scrollbar-track
-    {
-      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-      box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-      background-color: #F5F5F5;
-      border-radius: 10px;
-    }
-
-    .video-grid::-webkit-scrollbar
-    {
-      height: 10px;
-      background-color: #F5F5F5;
-      border-radius: 10px;
-    }
-
-    .video-grid::-webkit-scrollbar-thumb
-    {
-      border-radius: 10px;
-      background-image: -webkit-gradient(linear,
-                        left bottom,
-                        right top,
-                        color-stop(0.44, rgb(217, 122, 122)),
-                        color-stop(0.72, rgb(189, 73, 112)),
-                        color-stop(0.86, rgb(148, 28, 58)));
-    }
-
-    #main .video-grid {
-      position: absolute;
-      bottom: 80px;
-      height: 136px;
-      width: 96%;
-      margin: 0 15px;
-      z-index: 100;
-      display: flex;
-      transition: 0.4s linear;
-      overflow: auto;
-    }
-    
-    #main .video-grid video {
-      width: 150px;
-      height: 110px;
-      object-fit: cover;
-      margin-right: 30px;
-    }
-    
-    #main {
-      display: inline-block;
-      position: relative;
-      background-color: rgb(51, 49, 49);
-      background-image: linear-gradient(to bottom, black , rgb(51, 49, 49));
-      width: 75%;
-      height: 100vh;
-      transition: width 0.4s linear;
-    }
-
-    #main .teacher-video {
-      position: absolute;
-      top: 36px;
-      width: 100%;
-      height: 360px;
-      z-index: 100;
-      display: flex;
-      justify-content: center;
-    }
-
-    #main .teacher-video video {
-      width: 800px;
-      height: 480px;
-      object-fit: cover;
-    }
-
-    #main .share-screen {
-      position: absolute;
-      top: 36px;
-      right: 5%;
-      width: 50%;
-      height: 360px;
-    }
-
-    #main .share-screen video {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-    
-    .logo {
-      color: white;
-      width: 250px;
-      margin-left: 20px;
-      z-index: 200;
-      position: absolute;
-      bottom: 20px;
-    }
-    .icons1 {
-      list-style-type: none;
-      display: flex;
-      margin-top: 20px;
-    }
-
-    .icons2 {
-      list-style-type: none;
-      display: flex;
-      position: absolute;
-      justify-content: space-around;
-      bottom: 10px;
-      width: 450px;
-      margin-left: 30%;
-    }
-
-    i {
-      font-size: 25px;
-      margin-right: 30px;
-      color: white;
-    }
-
-    .circle-icon {
-      height: 55px;
-      width: 55px;
-      border-radius: 50px;
-      border-style: none;
-      background-color: black;
-    }
-
-    .circle-icon i {
-      font-size: 20px;
-      transform: translate(10px, 0);
-    }
-
-
-    .fa-microphone {
-      transform: translate(15.5px, 0) !important;
-    }
-
-    .fa-video {
-      transform: translate(11px, 0) !important;
-    }
-
-    .fa-bars {
-      margin-right: 60px;
-    }
-
-    .fa-phone-slash {
-      transform: translate(8px, 1px) !important;
-    }
-
-    .fa-fist-raised {
-      transform: translate(13px,0) !important;
-      font-size: 22px !important;
-    }
-
-    .fistup {
-      background-color: var(--primary_color);
-    }
-
-    #sidebar {
-      position: absolute;
-      right: 0;
-      display: inline-block;
-      width: 25%;
-      height: 100vh;
-      transition: width 0.4s linear;
-    }
-
-    .options {
-      position: absolute;
-      bottom: 2px;
-      right: 0px;
-      height: 50px;
-      width: 100%;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .icons3 {
-      list-style-type: none;
-      display: flex;
-      height: 100%;
-      width: 100%;
-      padding-left: 0;
-    }
-
-    .icons3 li {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    #red-dot {
-      display: none;
-      position: absolute;
-      left: 13px;
-      top: 14px;
-      font-size: 10px !important;
-      color: red !important;
-    }
-
-    #close {
-      background-color: var(--primary_color);
-      height: 70%;
-      width: 60px;
-      margin-top: 10px;
-      opacity: 1;
-      border-bottom-left-radius: 40px;
-      border-top-left-radius: 40px;
-      position: absolute;
-      right: 0;
-      padding: 7.5px 0;
-    }
-
-    #close-icon {
-      color: white;
-    }
-
-    #open {
-      display: none;
-      background-color: var(--primary_color);
-      height: 70%;
-      width: 60px;
-      margin-top: 10px;
-      opacity: 1;
-      border-bottom-left-radius: 40px;
-      border-top-left-radius: 40px;
-      position: absolute;
-      right: 0;
-      padding: 7.5px 0;
-    }
-
-    #open-icon {
-      color: white;
-    }
-
-    .options i {
-      color: black;
-      font-size: 20px;
-      margin-right: 50px;
-      transform: translate(24px,0);
-    }
-
-    .active-tab {
-      border-bottom: 4px solid var(--primary_color);
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
-    .active-tab i {
-      color: var(--primary_color);
-    }
-
-    .chat {
-      display: none;
-      height: 83vh;
-      overflow: auto;
-    }
-
-    .chat ol {
-      list-style-type: none;
-    }
-
-    .chat__sidebar {
-      height: 92.5vh;
-      overflow: auto;
-    }
-
-    .chat__sidebar ol {
-      list-style-type: none;
-    }
-
-    .message-header {
-      width: 100%;
-      padding: 10px 10px 10px 25px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-      margin-bottom: 20px;
-    }
-
-    #susers ol {
-      padding-left: 0;
-    }
-
-    #susers li {
-      line-height: 30px;
-      margin: 0 10px 0 25px;
-      padding-left: 15px;
-    }
-
-    #susers li:nth-child(odd){
-      background-color: rgba(165, 158, 158, 0.1);
-    }
-
-    #tusers ol {
-      padding-left: 0;
-    }
-
-    #tusers li {
-      line-height: 30px;
-      margin: 0 10px 0 25px;
-      padding-left: 15px;
-    }
-
-    #tusers li:nth-child(odd){
-      background-color: rgba(165, 158, 158, 0.1);
-    }
-
-    .teacher {
-      border-bottom: 3px solid black;
-      margin: 10px 10px 10px 25px;
-      height: 28px;
-    }
-
-    .students {
-      border-bottom: 3px solid black;
-      margin: 50px 10px 10px 25px;
-      height: 28px;
-    }
-
-    #message-form {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 10px;
-      margin-top: 20px;
-      position: fixed;
-      bottom: 60px;
-      width: 390px;
-      height: 60px;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-    }
-
-    #message-form input {
-      width: 80%;
-      border-style: none;
-      padding: 5px 6px;
-    }
-
-    input[type="text"], input[type="password"], textarea, select { 
-    outline: none;
-    }
-
-    #message-form button {
-      border-style: none;
-      background-color: white;
-    }
-
-    .chat__messages {
-      padding-left: 0;
-    }
-
-    .message {
-      padding: 0 10px 0 25px;
-    }
-
-    .message__title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .popup {
-      position: absolute;
-      top: 40px;
-      left: 42%;
-      display: inline-block;
-      cursor: pointer;
-      z-index: 1000;
-    }
-
-    .popup .popuptext {
-      visibility: hidden;
-      width: 160px;
-      background-color: white;
-      color: black;
-      text-align: center;
-      border-radius: 6px;
-      z-index: 1;
-    }
-
-    .popup .show {
-      visibility: visible;
-      -webkit-animation: fadeIn 1s;
-      animation: fadeIn 1s;
-    }
-
-    @-webkit-keyframes fadeIn {
-      from {opacity: 0;} 
-      to {opacity: 1;}
-    }
-
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity:1 ;}
-    }
-
-  </style>
-
 </head>
 
 <body>
-  <div id="main">
-     <!--
-        <ul class="icons1">
-      <li><i class="fas fa-bars"></i></li>
-      <li><i class="fa fa-mouse-pointer"></i></li>
-      <li><i class="fa fa-hand-pointer"></i></li>
-      <li><i class="fas fa-pencil-alt"></i></li>
-      <li><i class="far fa-square"></i></li>
-      <li><i class="fas fa-text-width"></i></li>
-    </ul>
-  -->
 
-    <div class="logo">
-      <h2>The Right Guru</h2>
+  <div class="site-wrapper">
+    <div class="mobile_button1" id="mobile_button1">
+      <i id="mobile_button1_icon" style="transform: translate(13px,0);" class="fas fa-chevron-left"></i>
     </div>
-    <div class="popup">
-      <span class="popuptext" id="myPopup"></span>
+  
+    <div class="mobile_button2" id="mobile_button2">
+      <i id="mobile_button2_icon" style="transform: translate(16px,0);" class="fas fa-edit"></i>
     </div>
-    <ul class="icons2">
-      <li><button id="muteButton" type="button" class="circle-icon">
-        <i id="mic" class="fas fa-microphone "></i>
-      </button></li>
-      <li><button id="videoButton" type="button" class="circle-icon">
-        <i id="video" class="fas fa-video "></i>
-      </button></li>
-      <li><button id="shareScreen" type="button" class="circle-icon">
-        <i class="fas fa-share-square "></i>
-      </button></li>
-      <li><button onclick="handRaise()" type="button" class="circle-icon" id="hand-raise">
-        <i class="fas fa-fist-raised"></i>
-      </button></li>
-      <li><button style="background-color: rgb(185, 13, 13);"  id="endCall" type="button" class="circle-icon">
-        <i class="fas fa-phone-slash"></i>
-      </button></li>
-    </ul>
-
-    <div id="teacher-video" class="teacher-video"></div>
-    <div style="width: 100%;">
-      <div id="video-grid" class="video-grid"></div>
-    </div>
-    
-  </div>
-
-  <section id="sidebar">
-    <div class="chat__sidebar" id="chat__sidebar">
-      <div class="message-header">
-        <h4 style="font-weight: 700;">Attendees</h4>
-      </div>
-      <div class="teacher">
-        <p style="font-size: 17px;">Teacher</p>
-      </div>
-      <div id="tusers">
-      </div>
-      <div class="students">
-        <p style="font-size: 17px;">Students</p>
-      </div>
-      <div id="susers">
-      </div>
-    </div>
-
-    <div class="chat" id="chat">
-        <div class="chat__main">
-          <div class="message-header">
-            <h4 style="font-weight: 700;">Chat Box</h4>
-          </div>
-            <ol id="messages" class="chat__messages"></ol>
-            <div class="chat__footer">
-                <form id="message-form">
-                    <input name="message" type="text" placeholder="Message" autofocus autocomplete="off" />
-                    <button><i style="color: black; transform: rotate(40deg);" class="far fa-paper-plane"></i></button>
-                </form>
-            </div>
-        </div>
-
-      <script id="message-template" type="text/template">
-        <li class="message">
-            <div class="message__title">
-                <h5 style="font-weight: 600; color: #ec3545">{{from}}</h5>
-                <span>{{createdAt}}</span>
-            </div>
-            <div class="message__body">
-                <p>{{text}}</p>
-            </div> 
-        </li> 
-      </script>
-
-      <script id="location-template" type="text/template">
-        <li class="message">
-            <div class="message__title">
-                <h4>{{from}}</h4>
-                <span>{{createdAt}}</span>
-            </div>
-            <div class="message__body">
-                <a href="{{url}}" target="_blank"><p>My Current Location</p></a>
-            </div> 
-        </li>
-      </script>
-    </div>
-
-    <div class="options">
-      <ul class="icons3">
-        <li onclick="comment()" id="comment" style="position: relative;">
-          <i class="far fa-comment-dots"></i>
-          <i id="red-dot" class="fas fa-circle"></i>
-        </li>
-        <li onclick="user()" id="user" class="active-tab"><i class="fas fa-user-friends"></i></li>
-        <li onclick="settings()" id="settings"><i class="fas fa-cog"></i></li>
-        <li id="close"><i id="close-icon" class="fas fa-times"></i></li>
-        <li id="open"><i id="open-icon" class="fas fa-chevron-left"></i></li>
+  
+    <div id="main">
+       <!--
+          <ul class="icons1">
+        <li><i class="fas fa-bars"></i></li>
+        <li><i class="fa fa-mouse-pointer"></i></li>
+        <li><i class="fa fa-hand-pointer"></i></li>
+        <li><i class="fas fa-pencil-alt"></i></li>
+        <li><i class="far fa-square"></i></li>
+        <li><i class="fas fa-text-width"></i></li>
       </ul>
-    </div>
+    -->
 
-  </section>
+      <div class="tablet_button" id="tablet_button">
+        <i id="tablet_button_icon" style="transform: translate(16px,0);" class="fas fa-edit"></i>
+      </div>
+  
+      <div class="logo">
+        <h2>The Right Guru</h2>
+      </div>
+      <div class="popup">
+        <span class="popuptext" id="myPopup"></span>
+      </div>
+      <ul id="icons2" class="icons2">
+        <li><button id="muteButton" type="button" class="circle-icon">
+          <i id="mic" class="fas fa-microphone "></i>
+        </button></li>
+        <li><button id="videoButton" type="button" class="circle-icon">
+          <i id="video" class="fas fa-video "></i>
+        </button></li>
+        <li><button id="shareScreen" type="button" class="circle-icon">
+          <i class="fas fa-share-square "></i>
+        </button></li>
+        <li><button onclick="handRaise()" type="button" class="circle-icon" id="hand-raise">
+          <i class="fas fa-fist-raised"></i>
+        </button></li>
+        <li><button style="background-color: rgb(185, 13, 13);"  id="endCall" type="button" class="circle-icon">
+          <i class="fas fa-phone-slash"></i>
+        </button></li>
+      </ul>
+  
+      <div id="teacher-video" class="teacher-video"></div>
+      <div id="video-grid" class="video-grid"></div>
+  
+    </div>
+  
+    <section id="sidebar">
+      <div class="chat__sidebar" id="chat__sidebar">
+        <div class="message-header">
+          <h4 style="font-weight: 700;">Attendees</h4>
+        </div>
+        <div class="teacher">
+          <p style="font-size: 17px;">Teacher</p>
+        </div>
+        <div id="tusers">
+        </div>
+        <div class="students">
+          <p style="font-size: 17px;">Students</p>
+        </div>
+        <div id="susers">
+        </div>
+      </div>
+  
+      <div class="chat" id="chat">
+          <div class="chat__main">
+            <div class="message-header">
+              <h4 style="font-weight: 700;">Chat Box</h4>
+            </div>
+              <ol id="messages" class="chat__messages"></ol>
+              <div class="chat__footer">
+                  <form id="message-form">
+                      <input name="message" type="text" placeholder="Message" autofocus autocomplete="off" />
+                      <button><i style="color: black; transform: rotate(40deg);" class="far fa-paper-plane"></i></button>
+                  </form>
+              </div>
+          </div>
+  
+        <script id="message-template" type="text/template">
+          <li class="message">
+              <div class="message__title">
+                  <h5 style="font-weight: 600; color: #ec3545">{{from}}</h5>
+                  <span>{{createdAt}}</span>
+              </div>
+              <div class="message__body">
+                  <p>{{text}}</p>
+              </div> 
+          </li> 
+        </script>
+  
+        <script id="location-template" type="text/template">
+          <li class="message">
+              <div class="message__title">
+                  <h4>{{from}}</h4>
+                  <span>{{createdAt}}</span>
+              </div>
+              <div class="message__body">
+                  <a href="{{url}}" target="_blank"><p>My Current Location</p></a>
+              </div> 
+          </li>
+        </script>
+      </div>
+  
+      <div class="options">
+        <ul class="icons3">
+          <li onclick="comment()" id="comment" style="position: relative;">
+            <i class="far fa-comment-dots"></i>
+            <i id="red-dot" class="fas fa-circle"></i>
+          </li>
+          <li onclick="user()" id="user" class="active-tab"><i class="fas fa-user-friends"></i></li>
+          <li onclick="settings()" id="settings"><i class="fas fa-cog"></i></li>
+          <li id="close"><i id="close-icon" class="fas fa-times"></i></li>
+          <li id="open"><i id="open-icon" class="fas fa-chevron-left"></i></li>
+        </ul>
+      </div>
+  
+    </section>
+  </div>
 
   <script>
     function comment() {
@@ -575,16 +184,16 @@
     }
 
     document.getElementById("close").addEventListener("click", function() {
-      document.getElementById("main").style.width = "100%";
-      document.getElementById("sidebar").style.width = "0%";
+      document.getElementById("main").classList.add("main");
+      document.getElementById("sidebar").classList.add("sidebar");
       document.getElementById("video-grid").style.marginRight = "90px";
       document.getElementById("close").style.display = "none";
       document.getElementById("open").style.display = "block";
     })
 
     document.getElementById("open").addEventListener("click", function() {
-      document.getElementById("main").style.width = "75%";
-      document.getElementById("sidebar").style.width = "25%";
+      document.getElementById("main").classList.remove("main");
+      document.getElementById("sidebar").classList.remove("sidebar");
       document.getElementById("video-grid").style.marginRight = "10px";
       document.getElementById("close").style.display = "block";
       document.getElementById("open").style.display = "none";
@@ -624,6 +233,26 @@
     function handRaise() {
       document.getElementById('hand-raise').classList.toggle('fistup');
     }
+
+    var mobButton1 = document.getElementById("mobile_button1");
+    mobButton1.addEventListener("click", function() {
+      document.getElementById("sidebar").classList.toggle("mobile_sidebar");
+      document.getElementById("main").classList.toggle("mobile_main");
+      document.getElementById("mobile_button2").classList.toggle("nodisp");
+      document.getElementById("mobile_button1_icon").classList.toggle("fa-chevron-right");
+    })
+
+    var mobButton2 = document.getElementById("mobile_button2");
+    mobButton2.addEventListener("click", function() {
+      document.getElementById("icons2").classList.toggle("icons2again");
+      document.getElementById("mobile_button2_icon").classList.toggle("fa-times");
+    })
+
+    var tabButton = document.getElementById("tablet_button");
+    tabButton.addEventListener("click", function() {
+      document.getElementById("icons2").classList.toggle("icons2again");  
+    })
+
   </script>
 
   <script src="js/moment.js"></script>
