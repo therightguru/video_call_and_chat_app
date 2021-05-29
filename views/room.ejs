@@ -22,125 +22,131 @@
 
 <body>
 
-  <div class="mobile_button1" id="mobile_button1">
-    <i id="mobile_button1_icon" style="transform: translate(13px,0);" class="fas fa-chevron-left"></i>
-  </div>
-
-  <div class="mobile_button2" id="mobile_button2">
-    <i id="mobile_button2_icon" style="transform: translate(16px,0);" class="fas fa-edit"></i>
-  </div>
-
-  <div id="main">
-     <!--
-        <ul class="icons1">
-      <li><i class="fas fa-bars"></i></li>
-      <li><i class="fa fa-mouse-pointer"></i></li>
-      <li><i class="fa fa-hand-pointer"></i></li>
-      <li><i class="fas fa-pencil-alt"></i></li>
-      <li><i class="far fa-square"></i></li>
-      <li><i class="fas fa-text-width"></i></li>
-    </ul>
-  -->
-
-    <div class="logo">
-      <h2>The Right Guru</h2>
+  <div class="site-wrapper">
+    <div class="mobile_button1" id="mobile_button1">
+      <i id="mobile_button1_icon" style="transform: translate(13px,0);" class="fas fa-chevron-left"></i>
     </div>
-    <div class="popup">
-      <span class="popuptext" id="myPopup"></span>
+  
+    <div class="mobile_button2" id="mobile_button2">
+      <i id="mobile_button2_icon" style="transform: translate(16px,0);" class="fas fa-edit"></i>
     </div>
-    <ul id="icons2" class="icons2">
-      <li><button id="muteButton" type="button" class="circle-icon">
-        <i id="mic" class="fas fa-microphone "></i>
-      </button></li>
-      <li><button id="videoButton" type="button" class="circle-icon">
-        <i id="video" class="fas fa-video "></i>
-      </button></li>
-      <li><button id="shareScreen" type="button" class="circle-icon">
-        <i class="fas fa-share-square "></i>
-      </button></li>
-      <li><button onclick="handRaise()" type="button" class="circle-icon" id="hand-raise">
-        <i class="fas fa-fist-raised"></i>
-      </button></li>
-      <li><button style="background-color: rgb(185, 13, 13);"  id="endCall" type="button" class="circle-icon">
-        <i class="fas fa-phone-slash"></i>
-      </button></li>
-    </ul>
-
-    <div id="teacher-video" class="teacher-video"></div>
-    <div id="video-grid" class="video-grid"></div>
-
-  </div>
-
-  <section id="sidebar">
-    <div class="chat__sidebar" id="chat__sidebar">
-      <div class="message-header">
-        <h4 style="font-weight: 700;">Attendees</h4>
-      </div>
-      <div class="teacher">
-        <p style="font-size: 17px;">Teacher</p>
-      </div>
-      <div id="tusers">
-      </div>
-      <div class="students">
-        <p style="font-size: 17px;">Students</p>
-      </div>
-      <div id="susers">
-      </div>
-    </div>
-
-    <div class="chat" id="chat">
-        <div class="chat__main">
-          <div class="message-header">
-            <h4 style="font-weight: 700;">Chat Box</h4>
-          </div>
-            <ol id="messages" class="chat__messages"></ol>
-            <div class="chat__footer">
-                <form id="message-form">
-                    <input name="message" type="text" placeholder="Message" autofocus autocomplete="off" />
-                    <button><i style="color: black; transform: rotate(40deg);" class="far fa-paper-plane"></i></button>
-                </form>
-            </div>
-        </div>
-
-      <script id="message-template" type="text/template">
-        <li class="message">
-            <div class="message__title">
-                <h5 style="font-weight: 600; color: #ec3545">{{from}}</h5>
-                <span>{{createdAt}}</span>
-            </div>
-            <div class="message__body">
-                <p>{{text}}</p>
-            </div> 
-        </li> 
-      </script>
-
-      <script id="location-template" type="text/template">
-        <li class="message">
-            <div class="message__title">
-                <h4>{{from}}</h4>
-                <span>{{createdAt}}</span>
-            </div>
-            <div class="message__body">
-                <a href="{{url}}" target="_blank"><p>My Current Location</p></a>
-            </div> 
-        </li>
-      </script>
-    </div>
-
-    <div class="options">
-      <ul class="icons3">
-        <li onclick="comment()" id="comment" style="position: relative;">
-          <i class="far fa-comment-dots"></i>
-          <i id="red-dot" class="fas fa-circle"></i>
-        </li>
-        <li onclick="user()" id="user" class="active-tab"><i class="fas fa-user-friends"></i></li>
-        <li onclick="settings()" id="settings"><i class="fas fa-cog"></i></li>
-        <li id="close"><i id="close-icon" class="fas fa-times"></i></li>
-        <li id="open"><i id="open-icon" class="fas fa-chevron-left"></i></li>
+  
+    <div id="main">
+       <!--
+          <ul class="icons1">
+        <li><i class="fas fa-bars"></i></li>
+        <li><i class="fa fa-mouse-pointer"></i></li>
+        <li><i class="fa fa-hand-pointer"></i></li>
+        <li><i class="fas fa-pencil-alt"></i></li>
+        <li><i class="far fa-square"></i></li>
+        <li><i class="fas fa-text-width"></i></li>
       </ul>
-    </div>
+    -->
 
-  </section>
+      <div class="tablet_button" id="tablet_button">
+        <i id="tablet_button_icon" style="transform: translate(16px,0);" class="fas fa-edit"></i>
+      </div>
+  
+      <div class="logo">
+        <h2>The Right Guru</h2>
+      </div>
+      <div class="popup">
+        <span class="popuptext" id="myPopup"></span>
+      </div>
+      <ul id="icons2" class="icons2">
+        <li><button id="muteButton" type="button" class="circle-icon">
+          <i id="mic" class="fas fa-microphone "></i>
+        </button></li>
+        <li><button id="videoButton" type="button" class="circle-icon">
+          <i id="video" class="fas fa-video "></i>
+        </button></li>
+        <li><button id="shareScreen" type="button" class="circle-icon">
+          <i class="fas fa-share-square "></i>
+        </button></li>
+        <li><button onclick="handRaise()" type="button" class="circle-icon" id="hand-raise">
+          <i class="fas fa-fist-raised"></i>
+        </button></li>
+        <li><button style="background-color: rgb(185, 13, 13);"  id="endCall" type="button" class="circle-icon">
+          <i class="fas fa-phone-slash"></i>
+        </button></li>
+      </ul>
+  
+      <div id="teacher-video" class="teacher-video"></div>
+      <div id="video-grid" class="video-grid"></div>
+  
+    </div>
+  
+    <section id="sidebar">
+      <div class="chat__sidebar" id="chat__sidebar">
+        <div class="message-header">
+          <h4 style="font-weight: 700;">Attendees</h4>
+        </div>
+        <div class="teacher">
+          <p style="font-size: 17px;">Teacher</p>
+        </div>
+        <div id="tusers">
+        </div>
+        <div class="students">
+          <p style="font-size: 17px;">Students</p>
+        </div>
+        <div id="susers">
+        </div>
+      </div>
+  
+      <div class="chat" id="chat">
+          <div class="chat__main">
+            <div class="message-header">
+              <h4 style="font-weight: 700;">Chat Box</h4>
+            </div>
+              <ol id="messages" class="chat__messages"></ol>
+              <div class="chat__footer">
+                  <form id="message-form">
+                      <input name="message" type="text" placeholder="Message" autofocus autocomplete="off" />
+                      <button><i style="color: black; transform: rotate(40deg);" class="far fa-paper-plane"></i></button>
+                  </form>
+              </div>
+          </div>
+  
+        <script id="message-template" type="text/template">
+          <li class="message">
+              <div class="message__title">
+                  <h5 style="font-weight: 600; color: #ec3545">{{from}}</h5>
+                  <span>{{createdAt}}</span>
+              </div>
+              <div class="message__body">
+                  <p>{{text}}</p>
+              </div> 
+          </li> 
+        </script>
+  
+        <script id="location-template" type="text/template">
+          <li class="message">
+              <div class="message__title">
+                  <h4>{{from}}</h4>
+                  <span>{{createdAt}}</span>
+              </div>
+              <div class="message__body">
+                  <a href="{{url}}" target="_blank"><p>My Current Location</p></a>
+              </div> 
+          </li>
+        </script>
+      </div>
+  
+      <div class="options">
+        <ul class="icons3">
+          <li onclick="comment()" id="comment" style="position: relative;">
+            <i class="far fa-comment-dots"></i>
+            <i id="red-dot" class="fas fa-circle"></i>
+          </li>
+          <li onclick="user()" id="user" class="active-tab"><i class="fas fa-user-friends"></i></li>
+          <li onclick="settings()" id="settings"><i class="fas fa-cog"></i></li>
+          <li id="close"><i id="close-icon" class="fas fa-times"></i></li>
+          <li id="open"><i id="open-icon" class="fas fa-chevron-left"></i></li>
+        </ul>
+      </div>
+  
+    </section>
+  </div>
 
   <script>
     function comment() {
@@ -178,16 +184,16 @@
     }
 
     document.getElementById("close").addEventListener("click", function() {
-      document.getElementById("main").style.width = "100%";
-      document.getElementById("sidebar").style.width = "0%";
+      document.getElementById("main").classList.add("main");
+      document.getElementById("sidebar").classList.add("sidebar");
       document.getElementById("video-grid").style.marginRight = "90px";
       document.getElementById("close").style.display = "none";
       document.getElementById("open").style.display = "block";
     })
 
     document.getElementById("open").addEventListener("click", function() {
-      document.getElementById("main").style.width = "75%";
-      document.getElementById("sidebar").style.width = "25%";
+      document.getElementById("main").classList.remove("main");
+      document.getElementById("sidebar").classList.remove("sidebar");
       document.getElementById("video-grid").style.marginRight = "10px";
       document.getElementById("close").style.display = "block";
       document.getElementById("open").style.display = "none";
@@ -240,6 +246,11 @@
     mobButton2.addEventListener("click", function() {
       document.getElementById("icons2").classList.toggle("icons2again");
       document.getElementById("mobile_button2_icon").classList.toggle("fa-times");
+    })
+
+    var tabButton = document.getElementById("tablet_button");
+    tabButton.addEventListener("click", function() {
+      document.getElementById("icons2").classList.toggle("icons2again");  
     })
 
   </script>

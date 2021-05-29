@@ -10,6 +10,11 @@
     overflow: hidden;
   }
 
+  .site-wraper {
+    position: relative;
+    overflow: hidden;
+  }
+
   .video-grid::-webkit-scrollbar-track
   {
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
@@ -67,19 +72,22 @@
     transition: width 0.4s linear;
   }
 
+  #main.main {
+    width: 100%;
+  }
+
   #main .teacher-video {
     position: absolute;
     top: 36px;
     width: 100%;
-    height: 360px;
+    height: 410px;
     z-index: 100;
     display: flex;
     justify-content: center;
   }
 
   #main .teacher-video video {
-    width: 800px;
-    height: 480px;
+    width: 70%;
     object-fit: cover;
   }
   
@@ -158,7 +166,11 @@
     display: inline-block;
     width: 25%;
     height: 100vh;
-    transition: width 0.4s linear;
+    transition: all 0.4s linear;
+  }
+
+  #sidebar.sidebar {
+    width: 0;
   }
 
   .options {
@@ -248,6 +260,7 @@
     display: none;
     height: 83vh;
     overflow: auto;
+    position: relative;
   }
 
   .chat ol {
@@ -317,7 +330,7 @@
     margin-top: 20px;
     position: fixed;
     bottom: 60px;
-    width: 390px;
+    width: 25%;
     height: 60px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   }
@@ -388,6 +401,18 @@
 
   .mobile_button1 {
     display: none;
+  }
+
+  .mobile_button2 {
+    display: none;
+  }
+
+  .tablet_button {
+    display: none;
+  }
+
+  .nodisp {
+    display: none !important;
   }
 
   @media screen and (max-width: 576px) {
@@ -511,6 +536,67 @@
 
   }
   
-  .nodisp {
-    display: none !important;
+  @media screen and (min-width: 576px) and (max-width: 1145px) {
+    #main {
+      width: 60% ;
+    }
+
+    #sidebar {
+      width: 40% ;
+      z-index: 1000;
+    }
+
+    .icons2 {
+      display: flex;
+      flex-direction: column;
+      justify-items: center;
+      align-content: center;
+      background-color: rgb(78, 45, 45);
+      padding: 10px;
+      border-radius: 3px;
+      right: 12%;
+      bottom: -410px;
+      width: auto;
+      height: 400px;
+      z-index: -100;
+      transition: all ease-in 0.6s;
+    }
+
+    #message-form {
+      width: 40%;
+    }
+
+    .tablet_button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: 20px;
+      right: 13%;
+      height: 50px;
+      width: 50px;
+      background-color: var(--primary_color);
+      border-radius: 50%;
+      z-index: 100;
+    }
+
+    .tablet_button:hover {
+      cursor: pointer;
+    }
+
+    .icons2.icons2again {
+      display: flex;
+      flex-direction: column;
+      justify-items: center;
+      align-content: center;
+      background-color: rgb(78, 45, 45);
+      padding: 10px;
+      border-radius: 3px;
+      right: 12%;
+      bottom: 100px;
+      width: auto;
+      height: 400px;
+      z-index: 1000;
+    }
+
   }
