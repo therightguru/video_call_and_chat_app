@@ -33,9 +33,12 @@ navigator.mediaDevices.getUserMedia({
     call.answer(stream)
     const video = document.createElement('video')
     call.on('stream', userVideoStream => {
-      addVideoStream(video, userVideoStream)
+      if(call.metadata.from.includes("TC_")) {
+        addVideoStreamTeacher(video, userVideoStream)
+      } else {
+        addVideoStream(video, userVideoStream)
+      }
     })
-    console.log("2", peers)
     peers[call.peer] = call
   })
 
@@ -45,7 +48,9 @@ navigator.mediaDevices.getUserMedia({
 })
 
 socket.on('user-disconnected', userId => {
-  if (peers[userId]) peers[userId].close()
+  if (peers[userId]) {
+    peers[userId].close()
+  }
 })
 
 myPeer.on('open', id => {
@@ -53,7 +58,7 @@ myPeer.on('open', id => {
 })
 
 function connectToNewUser(joinedUser, userId, stream) {
-  const call = myPeer.call(userId, stream)
+  const call = myPeer.call(userId, stream, {metadata: {"from": window.location.href.split("&")[1]}})
   const video = document.createElement('video')
   call.on('stream', userVideoStream => {
     if(joinedUser.includes("TC_")){
@@ -158,9 +163,9 @@ document.getElementById("shareScreen")
 document.getElementById("endCall")
   .addEventListener("click", function() {
     myPeer.destroy()
-    if (JOINED_USER.includes("ES")){
+    if (JOINED_USER.includes("ES_")){
       window.location.replace("https://therightguru.com/student-dashboard")
-    } else if (JOINED_USER.includes("TC")) {
+    } else if (JOINED_USER.includes("TC_")) {
       window.location.replace("https://therightguru.com/teacher-dashboard")
     } else {
       window.location.replace("https://therightguru.com")

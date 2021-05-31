@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
@@ -10,10 +11,12 @@ const {Users} = require('./utils/users');
 const { getPresignedUrl } = require('./flutter-s3');
 
 var users = new Users();
+let teacher_peer = "";
 
 app.set('view engine', 'ejs')
 app.use(express.json())
 app.use(express.static('public'))
+app.use(cors())
 
 app.get('/', (req, res) => {
   res.redirect(`/${uuidV4()}&kunal`)
@@ -83,6 +86,7 @@ io.on('connection', socket => {
 
   // For webRTC
   socket.on('join-room', (roomId, joinedUser, userId) => {
+    console.log(userId);
     socket.join(roomId)
     socket.to(roomId).broadcast.emit('user-connected', joinedUser, userId)
 
