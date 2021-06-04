@@ -6,11 +6,18 @@
     --primary_color: #ec3545;
   }
 
-  body {
+  html, body {
+    height: 100%;
+    width: 100%;
     overflow: hidden;
+    position: fixed;
+    margin: 0;
+    overscroll-behavior: none;
   }
 
-  .site-wraper {
+  .site-wrapper {
+    height: 100%;
+    width: 100%;
     position: relative;
     overflow: hidden;
   }
@@ -161,7 +168,7 @@
 
   #sidebar {
     position: absolute;
-    top: 0;
+    top: 1px;
     right: 0;
     display: inline-block;
     width: 25%;
