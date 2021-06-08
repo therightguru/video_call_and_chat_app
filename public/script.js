@@ -164,11 +164,17 @@ document.getElementById("endCall")
   .addEventListener("click", function() {
     myPeer.destroy()
     if (JOINED_USER.includes("ES_")){
-      window.location.replace("https://therightguru.com/student-dashboard")
+      window.location.replace("https://test.therightguru.com/student-live-class-rating/" + JOINED_USER + "/" + ROOM_ID)
     } else if (JOINED_USER.includes("TC_")) {
-      window.location.replace("https://therightguru.com/teacher-dashboard")
+      if(ROOM_ID.includes("trial_")) {
+        window.location.replace("https://test.therightguru.com/teacher-live-class-rating/" + JOINED_USER + "/" + ROOM_ID) 
+      } else {
+        window.location.replace("https://test.therightguru.com/teacher-dashboard") 
+      }
+    } else if (JOINED_USER.includes("TS_")) {
+      window.location.replace("https://test.therightguru.com/student-trial-class-rating/" + JOINED_USER + "/" + ROOM_ID)
     } else {
-      window.location.replace("https://therightguru.com")
+      window.location.replace("https://test.therightguru.com")
     }
     
     // socket.current.emit('close',{to:caller})
