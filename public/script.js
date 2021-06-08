@@ -127,26 +127,7 @@ document.getElementById("shareScreen")
       });
       myVideo.srcObject=screenStream
 
-      // if(JOINED_USER.includes("TC")) {
-      //   teacherVideo.classList.add('share-screen');
-      //   teacherVideo.classList.remove('teacher-video');
-      // }
-      // else {
-      //   videoGrid.classList.add('share-screen');
-      //   videoGrid.classList.remove('video-grid');
-      // }
-
       screenStream.getTracks()[0].onended = () => {
-
-        // if(JOINED_USER.includes("TC")) {
-        //   teacherVideo.classList.remove('share-screen');
-        //   teacherVideo.classList.add('teacher-video');
-        // }
-        // else {
-        //   videoGrid.classList.remove('share-screen');
-        //   videoGrid.classList.add('video-grid');
-        // }
-
         Object.values(peers).map(peer => {
           peer.peerConnection?.getSenders().map(sender => {
               if(sender.track.kind == "video") {
@@ -158,6 +139,25 @@ document.getElementById("shareScreen")
       }
   })
 })
+
+// Screen Recording
+document.getElementById("screenRecord")
+  .addEventListener("click", function () {
+    const stream = await navigator.mediaDevices.getDisplayMedia({
+      video: { mediaSource: "screen" }
+    });
+
+    const recorder = new MediaRecorder(stream);
+    const chunks = [];
+    recorder.ondataavailable = e => chunks.push(e.data);
+
+    recorder.onstop = e => {
+      const completeBlob = new Blob(chunks, { type: chunks[0].type });
+      console.log(URL.createObjectURL(completeBlob));
+    };
+
+    recorder.start();
+  })
 
 // End Call
 document.getElementById("endCall")
