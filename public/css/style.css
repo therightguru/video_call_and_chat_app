@@ -6,11 +6,18 @@
     --primary_color: #ec3545;
   }
 
-  body {
+  html, body {
+    height: 100%;
+    width: 100%;
     overflow: hidden;
+    position: fixed;
+    margin: 0;
+    overscroll-behavior: none;
   }
 
-  .site-wraper {
+  .site-wrapper {
+    height: 100%;
+    width: 100%;
     position: relative;
     overflow: hidden;
   }
@@ -161,7 +168,7 @@
 
   #sidebar {
     position: absolute;
-    top: 0;
+    top: 1px;
     right: 0;
     display: inline-block;
     width: 25%;
@@ -225,7 +232,7 @@
   #open {
     display: none;
     background-color: var(--primary_color);
-    height: 70%;
+    height: 35px;
     width: 60px;
     margin-top: 10px;
     opacity: 1;
@@ -233,11 +240,16 @@
     border-top-left-radius: 40px;
     position: absolute;
     right: 0;
-    padding: 7.5px 0;
+    bottom: 6px;
+    z-index: 1000;
+    cursor: pointer;
+    text-align: center;
   }
 
   #open-icon {
     color: white;
+    font-size: 20px;
+    transform: translate(16px, 6px);
   }
 
   .options i {
@@ -274,6 +286,21 @@
 
   .chat__sidebar ol {
     list-style-type: none;
+  }
+
+  .thirdtab {
+    display: none;
+    height: 92.5vh;
+    width: 100%;
+  }
+
+  .thirdtab_content {
+    width: 100%;
+  }
+
+  select:focus {
+    box-shadow: 0 0 0 4px rgba(236, 53, 69, 0.4) !important;
+    border: 1px solid #ec3545 !important;
   }
 
   .message-header {

@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -30,6 +31,8 @@
     <div class="mobile_button2" id="mobile_button2">
       <i id="mobile_button2_icon" style="transform: translate(16px,0);" class="fas fa-edit"></i>
     </div>
+
+    <div id="open"><i id="open-icon" class="fas fa-chevron-left"></i></div>
   
     <div id="main">
        <!--
@@ -48,7 +51,7 @@
       </div>
   
       <div class="logo">
-        <h2>The Right Guru</h2>
+        <h2>TheRightGuru</h2>
       </div>
       <div class="popup">
         <span class="popuptext" id="myPopup"></span>
@@ -131,6 +134,24 @@
           </li>
         </script>
       </div>
+
+      <div id="thirdtab" class="thirdtab">
+        <div class="message-header">
+          <h4 style="font-weight: 700;">Text</h4>
+        </div>
+        <div class="thirdtab_content">
+          <select style="margin: 20px auto; width: 245px;" class="form-select">
+            <option selected>Mark As Absent</option>
+            <option value="1">Mark Class As Completed</option>
+          </select>
+
+          <div style="margin: auto; width: 80px;">
+            <button type="button" class="btn btn-danger mx-auto">Submit</button>
+          </div>
+          
+  
+        </div>
+      </div>
   
       <div class="options">
         <ul class="icons3">
@@ -141,7 +162,7 @@
           <li onclick="user()" id="user" class="active-tab"><i class="fas fa-user-friends"></i></li>
           <li onclick="settings()" id="settings"><i class="fas fa-cog"></i></li>
           <li id="close"><i id="close-icon" class="fas fa-times"></i></li>
-          <li id="open"><i id="open-icon" class="fas fa-chevron-left"></i></li>
+          
         </ul>
       </div>
   
@@ -155,6 +176,7 @@
       var element = document.getElementById("comment");
       element.classList.add("active-tab");
 
+      document.getElementById("thirdtab").style.display = "none";
       document.getElementById("chat__sidebar").style.display = "none";
       document.getElementById("chat").style.display = "block";
       on_message_tab = true;
@@ -169,6 +191,7 @@
 
       document.getElementById("chat__sidebar").style.display = "block";
       document.getElementById("chat").style.display = "none";
+      document.getElementById("thirdtab").style.display = "none";
       on_message_tab = false;
     }
 
@@ -180,6 +203,7 @@
 
       document.getElementById("chat__sidebar").style.display = "none";
       document.getElementById("chat").style.display = "none";
+      document.getElementById("thirdtab").style.display = "block";
       on_message_tab = false;
     }
 
