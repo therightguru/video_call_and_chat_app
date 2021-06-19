@@ -11,7 +11,6 @@ const {Users} = require('./utils/users');
 const { getPresignedUrl } = require('./flutter-s3');
 
 var users = new Users();
-let teacher_peer = "";
 
 app.set('view engine', 'ejs')
 app.use(express.json())

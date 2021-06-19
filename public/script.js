@@ -141,23 +141,93 @@ document.getElementById("shareScreen")
 })
 
 // Screen Recording
-document.getElementById("screenRecord")
-  .addEventListener("click", function () {
-    const stream = await navigator.mediaDevices.getDisplayMedia({
+let recorder, recordStream;
+const startRecord = document.getElementById("screenRecord");
+const stopRecord = document.getElementById("stopRecord");
+async function startRecording() {
+    recordStream = await navigator.mediaDevices.getDisplayMedia({
       video: { mediaSource: "screen" }
     });
 
-    const recorder = new MediaRecorder(stream);
+    recorder = new MediaRecorder(recordStream);
     const chunks = [];
     recorder.ondataavailable = e => chunks.push(e.data);
 
     recorder.onstop = e => {
       const completeBlob = new Blob(chunks, { type: chunks[0].type });
       console.log(URL.createObjectURL(completeBlob));
+
+      // DOWNLOAD
+      // const a = document.createElement("a")
+      // a.style.display = "none";
+      // a.href = URL.createObjectURL(completeBlob);
+      // a.download = 'test.mp4';
+      // document.body.appendChild(a);
+      // a.click();
+      // setTimeout(() => {
+      //   document.body.removeChild(a);
+      // }, 100);
+
+      // SEND TO AWS S3
+      AWS.config.update({ region: confRegion });
+      const S3_BUCKET = confBucketName;
+      const s3 = new AWS.S3({
+        accessKeyId: confAccessKeyId,
+        secretAccessKey: confSecretAccessKey,
+        region: confRegion
+      });
+
+      var videoFile = new File([completeBlob],   (new Date()).toISOString() + "_" + JOINED_USER + '.webm');
+      const s3Params = {
+        Bucket: S3_BUCKET,
+        Key: "class_video/" + videoFile.name,
+        Body: videoFile,
+        ContentType: videoFile.type,
+        ACL: "public-read",
+      };
+
+      s3.putObject(s3Params, function(err, data) {
+          if (err) {
+              console.log(" Error while  UPLOADING Video :");
+          } else {
+              console.log(" Success UPLOADING Video: ", data);
+          }
+      });
     };
 
     recorder.start();
+}
+
+startRecord.addEventListener("click", () => {
+  startRecord.setAttribute("disabled", true);
+  stopRecord.removeAttribute("disabled");
+
+  startRecording();
+});
+
+stopRecord.addEventListener("click", () => {
+  stopRecord.setAttribute("disabled", true);
+  startRecord.removeAttribute("disabled");
+
+  recorder.stop();
+  recordStream.getVideoTracks()[0].stop();
+});
+
+let classStatusUpdated = false;
+async function updateClassStatus(newStatus) {
+  const classUpdated = await fetch(`http://localhost:8000/api/update-class-status/${ROOM_ID}`, {
+    method: 'PATCH',
+    headers: {
+      "Content-type": "application/json"
+    },
+    body: JSON.stringify({ class_status: newStatus })
   })
+  
+  if(classUpdated.status == 201) {
+    alert("Class status updated. Now you can end call.");
+    classStatusUpdated = true;
+  }
+}
 
 // End Call
 document.getElementById("endCall")
@@ -166,11 +236,13 @@ document.getElementById("endCall")
     if (JOINED_USER.includes("ES_")){
       window.location.replace("https://test.therightguru.com/student-live-class-rating/" + JOINED_USER + "/" + ROOM_ID)
     } else if (JOINED_USER.includes("TC_")) {
-      if(ROOM_ID.includes("trial_")) {
-        window.location.replace("https://test.therightguru.com/teacher-live-class-rating/" + JOINED_USER + "/" + ROOM_ID) 
-      } else {
-        window.location.replace("https://test.therightguru.com/teacher-dashboard") 
-      }
+      if(classStatusUpdated) {
+        if(ROOM_ID.includes("trial_")) {
+          window.location.replace("https://test.therightguru.com/teacher-live-class-rating/" + JOINED_USER + "/" + ROOM_ID) 
+        } else {
+          window.location.replace("https://test.therightguru.com/teacher-dashboard") 
+        }
+      } else alert("Please update class status first.")
     } else if (JOINED_USER.includes("TS_")) {
       window.location.replace("https://test.therightguru.com/student-trial-class-rating/" + JOINED_USER + "/" + ROOM_ID)
     } else {

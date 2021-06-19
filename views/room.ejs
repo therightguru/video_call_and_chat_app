@@ -16,7 +16,9 @@
     const JOINED_USER = "<%= data.joinedUser %>"
   </script>
   <script defer src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+  <script src="https://sdk.amazonaws.com/js/aws-sdk-2.922.0.min.js"></script>
   <script src="/socket.io/socket.io.js" defer></script>
+  <script src="config-s3.js"></script>
   <script src="script.js" defer></script>
   <title>Video Call and Chat App</title>
 </head>
@@ -140,16 +142,33 @@
           <h4 style="font-weight: 700;">Text</h4>
         </div>
         <div class="thirdtab_content">
-          <select style="margin: 20px auto; width: 245px;" class="form-select">
-            <option selected>Mark As Absent</option>
-            <option value="1">Mark Class As Completed</option>
-          </select>
+          // <select style="margin: 20px auto; width: 245px;" class="form-select">
+          //   <option selected value="Absent">Mark As Absent</option>
+          //   <option value="Completed">Mark Class As Completed</option>
+          // </select>
 
           <div style="margin: auto; width: 80px;">
-            <button type="button" class="btn btn-danger mx-auto">Submit</button>
+            <button type="button" class="btn btn-danger mx-auto" onclick="updateClassStatus(Absent)">Mark as absent</button>
+          </div>
+          
+          <div style="margin: auto; width: 80px;">
+            <button type="button" class="btn btn-danger mx-auto" onclick="updateClassStatus('Completed')">Mark Class as Completed</button>
+          </div>
+
+          <div style="margin: 10px auto; width: 80px;">
+            <button id="screenRecord" type="button" class="btn btn-outline-danger mx-auto">Start Recording</button>
+            <button id="stopRecord" type="button" class="btn btn-outline-danger mx-auto">Stop Recording</button>
           </div>
           
   
+        </div>
+      </div>
+
+      <div id="thirdtab-student" class="thirdtab-student">
+        <div class="message-header">
+          <h4 style="font-weight: 700;">Text</h4>
+        </div>
+        <div class="thirdtab_content">
         </div>
       </div>
   
@@ -203,7 +222,11 @@
 
       document.getElementById("chat__sidebar").style.display = "none";
       document.getElementById("chat").style.display = "none";
-      document.getElementById("thirdtab").style.display = "block";
+      if(JOINED_USER.includes("TC_")) {
+        document.getElementById("thirdtab").style.display = "block";
+      } else {
+        document.getElementById("thirdtab-student").style.display = "block"
+      }
       on_message_tab = false;
     }
 

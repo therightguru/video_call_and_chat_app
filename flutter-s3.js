@@ -8,28 +8,20 @@ const S3_BUCKET = awsConfig.bucketName;
 const s3 = new AWS.S3({
   accessKeyId: awsConfig.accessKeyId,
   secretAccessKey: awsConfig.secretAccessKey,
-  region: awsConfig.region,
-  dirName: 'student-assignments'
+  region: awsConfig.region
 //   signatureVersion: "v4",
   //   useAccelerateEndpoint: true
 });
 
 const getPresignedUrl = (req, res) => {
- console.log("BODY: ", req.body);
- console.log(req.body.fileType); 
  let fileType = req.body.fileType;
-//   if (fileType != ".jpg" && fileType != ".png" && fileType != ".jpeg") {
-//     return res
-//       .status(403)
-//       .json({ success: false, message: "Image format invalid" });
-//   }
 
   fileType = fileType.substring(1, fileType.length);
 
   const fileName = uuidV4();
   const s3Params = {
     Bucket: S3_BUCKET,
-    Key: fileName + "." + fileType,
+    Key: "student-assignments/" + fileName + "." + fileType,
     // Expires: 60 * 60,
     ContentType: "application/" + fileType,
     ACL: "public-read",

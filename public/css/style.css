@@ -294,6 +294,12 @@
     width: 100%;
   }
 
+  .thirdtab-student {
+    display: none;
+    height: 92.5vh;
+    width: 100%;
+  }
+
   .thirdtab_content {
     width: 100%;
   }
