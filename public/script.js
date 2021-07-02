@@ -215,7 +215,7 @@ stopRecord.addEventListener("click", () => {
 
 let classStatusUpdated = false;
 async function updateClassStatus(newStatus) {
-  const classUpdated = await fetch(`http://localhost:8000/api/update-class-status/${ROOM_ID}`, {
+  const classUpdated = await fetch(`https://therightguru.com/api/update-class-status/${ROOM_ID}`, {
     method: 'PATCH',
     headers: {
       "Content-type": "application/json"
