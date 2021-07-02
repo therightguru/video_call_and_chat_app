@@ -234,19 +234,19 @@ document.getElementById("endCall")
   .addEventListener("click", function() {
     myPeer.destroy()
     if (JOINED_USER.includes("ES_")){
-      window.location.replace("https://test.therightguru.com/student-live-class-rating/" + JOINED_USER + "/" + ROOM_ID)
+      window.location.replace("https://therightguru.com/student-live-class-rating/" + JOINED_USER + "/" + ROOM_ID)
     } else if (JOINED_USER.includes("TC_")) {
       if(classStatusUpdated) {
         if(ROOM_ID.includes("trial_")) {
-          window.location.replace("https://test.therightguru.com/teacher-live-class-rating/" + JOINED_USER + "/" + ROOM_ID) 
+          window.location.replace("https://therightguru.com/teacher-live-class-rating/" + JOINED_USER + "/" + ROOM_ID) 
         } else {
-          window.location.replace("https://test.therightguru.com/teacher-dashboard") 
+          window.location.replace("https://therightguru.com/teacher-dashboard") 
         }
       } else alert("Please update class status first.")
     } else if (JOINED_USER.includes("TS_")) {
-      window.location.replace("https://test.therightguru.com/student-trial-class-rating/" + JOINED_USER + "/" + ROOM_ID)
+      window.location.replace("https://therightguru.com/student-trial-class-rating/" + JOINED_USER + "/" + ROOM_ID)
     } else {
-      window.location.replace("https://test.therightguru.com")
+      window.location.replace("https://therightguru.com")
     }
     
     // socket.current.emit('close',{to:caller})
