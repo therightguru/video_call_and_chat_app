@@ -3,7 +3,7 @@ const videoGrid = document.getElementById('video-grid')
 const teacherVideo = document.getElementById('teacher-video')
 const myPeer = new Peer({
   secure: true,
-  host: 'peerjs-server.herokuapp.com',
+  // host: 'peerjs-server.herokuapp.com',
   port: '443',
   config: { 'iceServers': [
     { 'urls': 'stun:stun.therightguru.com:3478' },
@@ -126,6 +126,7 @@ document.getElementById("shareScreen")
         })
       });
       myVideo.srcObject=screenStream
+      myVideo.controls = false
 
       screenStream.getTracks()[0].onended = () => {
         Object.values(peers).map(peer => {
@@ -136,6 +137,7 @@ document.getElementById("shareScreen")
           })
         });
         myVideo.srcObject=callStream
+        myVideo.controls = true
       }
   })
 })
@@ -252,6 +254,23 @@ document.getElementById("endCall")
     // socket.current.emit('close',{to:caller})
   })
 
+// User Verification for Class
+window.onload = function() {
+  verifyAttendee();
+}
+
+const verifyAttendee = () => {
+  fetch(`https://therightguru.com/api/validate-candidate/${ROOM_ID}/${JOINED_USER}`)
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      if(data.validated === "false") {
+        alert("You are not allowed to join this class. Please refrain from joining this class.")
+        window.location.replace("https://therightguru.com");
+      }
+    })
+    .catch(err => console.log(err))
+}
 
 // JavaScript for chat functionality 
 
