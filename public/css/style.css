@@ -410,10 +410,12 @@
     visibility: hidden;
     width: 160px;
     background-color: white;
-    color: black;
+    color: red;
     text-align: center;
     border-radius: 6px;
     z-index: 1;
+    font-weight: 700;
+    font-size: 26px;
   }
 
   .popup .show {
