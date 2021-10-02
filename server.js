@@ -4,16 +4,22 @@ const app = express()
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
 const { v4: uuidV4 } = require('uuid')
+const { ExpressPeerServer } = require('peer');
 
 const {generateMessage, generateLocationMessage} = require('./utils/message');
 const {isRealString} = require('./utils/validation');
 const {Users} = require('./utils/users');
 const { getPresignedUrl } = require('./flutter-s3');
 
+// const peerServer = ExpressPeerServer(server, {
+//   path: '/trg'
+// });
+
 var users = new Users();
 
 app.set('view engine', 'ejs')
 app.use(express.json())
+// app.use('/peerjs', peerServer);
 app.use(express.static('public'))
 app.use(cors())
 

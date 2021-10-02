@@ -1,9 +1,21 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 const teacherVideo = document.getElementById('teacher-video')
+// const myPeer = new Peer(JOINED_USER, {
+//   // secure: true,
+//   // host: 'peerjs-server.herokuapp.com',
+//   host: '/',
+//   port: '5050',
+//   path: '/peerjs/trg',
+//   config: { 'iceServers': [
+//     { 'urls': 'stun:stun.therightguru.com:3478' },
+//     { 'urls': 'turn:turn.therightguru.com:3478', 'username': 'admin', 'credential': 'therightguru' }
+//   ],'sdpSemantics': 'unified-plan' }
+// })
+
 const myPeer = new Peer({
   secure: true,
-  // host: 'peerjs-server.herokuapp.com',
+  host: 'peerjs-server.herokuapp.com',
   port: '443',
   config: { 'iceServers': [
     { 'urls': 'stun:stun.therightguru.com:3478' },
@@ -43,7 +55,9 @@ navigator.mediaDevices.getUserMedia({
   })
 
   socket.on('user-connected', (joinedUser, userId) => {
-    connectToNewUser(joinedUser, userId, stream)
+    setTimeout(() => {
+      connectToNewUser(joinedUser, userId, stream)
+    }, 1200)
   })
 })
 
