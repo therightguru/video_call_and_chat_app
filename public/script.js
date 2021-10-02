@@ -13,9 +13,9 @@ const teacherVideo = document.getElementById('teacher-video')
 //   ],'sdpSemantics': 'unified-plan' }
 // })
 
-const myPeer = new Peer({
+const myPeer = new Peer(JOINED_USER, {
   secure: true,
-  host: 'peerjs-server.herokuapp.com',
+  host: '0.peerjs.com',
   port: '443',
   config: { 'iceServers': [
     { 'urls': 'stun:stun.therightguru.com:3478' },
@@ -45,6 +45,7 @@ navigator.mediaDevices.getUserMedia({
     call.answer(stream)
     const video = document.createElement('video')
     call.on('stream', userVideoStream => {
+      console.log("After: ", userVideoStream.getAudioTracks(), userVideoStream.getVideoTracks())
       if(call.metadata.from.includes("TC_")) {
         addVideoStreamTeacher(video, userVideoStream)
       } else {
@@ -55,9 +56,10 @@ navigator.mediaDevices.getUserMedia({
   })
 
   socket.on('user-connected', (joinedUser, userId) => {
+    // connectToNewUser(joinedUser, userId, stream)
     setTimeout(() => {
       connectToNewUser(joinedUser, userId, stream)
-    }, 1200)
+    }, 3000)
   })
 })
 
