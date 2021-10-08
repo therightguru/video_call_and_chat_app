@@ -250,11 +250,12 @@ async function updateClassStatus(newStatus) {
 // End Call
 document.getElementById("endCall")
   .addEventListener("click", function() {
-    myPeer.destroy()
     if (JOINED_USER.includes("ES_")){
+      myPeer.destroy()
       window.location.replace("https://therightguru.com/student-live-class-rating/" + JOINED_USER + "/" + ROOM_ID)
     } else if (JOINED_USER.includes("TC_")) {
       if(classStatusUpdated) {
+        myPeer.destroy()
         if(ROOM_ID.includes("trial_")) {
           window.location.replace("https://therightguru.com/teacher-live-class-rating/" + JOINED_USER + "/" + ROOM_ID) 
         } else {
@@ -262,8 +263,10 @@ document.getElementById("endCall")
         }
       } else alert("Please update class status first.")
     } else if (JOINED_USER.includes("TS_")) {
+      myPeer.destroy()
       window.location.replace("https://therightguru.com/student-trial-class-rating/" + JOINED_USER + "/" + ROOM_ID)
     } else {
+      myPeer.destroy()
       window.location.replace("https://therightguru.com")
     }
     
