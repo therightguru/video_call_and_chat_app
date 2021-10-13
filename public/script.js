@@ -195,7 +195,7 @@ async function startRecording() {
         region: confRegion
       });
 
-      var videoFile = new File([completeBlob],   (new Date()).toISOString() + "_" + JOINED_USER + '.webm');
+      var videoFile = new File([completeBlob],   (new Date()).toISOString() + "_" + JOINED_USER.replace("_at_", "@").replace(/ /g, ".") + '.webm');
       const s3Params = {
         Bucket: S3_BUCKET,
         Key: "class_video/" + videoFile.name,
@@ -252,19 +252,19 @@ document.getElementById("endCall")
   .addEventListener("click", function() {
     if (JOINED_USER.includes("ES_")){
       myPeer.destroy()
-      window.location.replace("https://therightguru.com/student-live-class-rating/" + JOINED_USER + "/" + ROOM_ID)
+      window.location.replace("https://therightguru.com/student-live-class-rating/" + JOINED_USER.replace("_at_", "@").replace(/ /g, ".") + "/" + ROOM_ID)
     } else if (JOINED_USER.includes("TC_")) {
       if(classStatusUpdated) {
         myPeer.destroy()
         if(ROOM_ID.includes("trial_")) {
-          window.location.replace("https://therightguru.com/teacher-live-class-rating/" + JOINED_USER + "/" + ROOM_ID) 
+          window.location.replace("https://therightguru.com/teacher-live-class-rating/" + JOINED_USER.replace("_at_", "@").replace(/ /g, ".") + "/" + ROOM_ID) 
         } else {
           window.location.replace("https://therightguru.com/teacher-dashboard") 
         }
       } else alert("Please update class status first.")
     } else if (JOINED_USER.includes("TS_")) {
       myPeer.destroy()
-      window.location.replace("https://therightguru.com/student-trial-class-rating/" + JOINED_USER + "/" + ROOM_ID)
+      window.location.replace("https://therightguru.com/student-trial-class-rating/" + JOINED_USER.replace("_at_", "@").replace(/ /g, ".") + "/" + ROOM_ID)
     } else {
       myPeer.destroy()
       window.location.replace("https://therightguru.com")
@@ -279,7 +279,7 @@ window.onload = function() {
 }
 
 const verifyAttendee = () => {
-  fetch(`https://therightguru.com/api/validate-candidate/${ROOM_ID}/${JOINED_USER}`)
+  fetch(`https://therightguru.com/api/validate-candidate/${ROOM_ID}/${JOINED_USER.replace("_at_", "@").replace(/ /g, ".")}`)
     .then(res => res.json())
     .then(data => {
       console.log(data);
@@ -394,7 +394,7 @@ document.getElementById("hand-raise")
     isHandRaised = !isHandRaised;
     if(isHandRaised) {
       socket.emit('raiseHand', {
-        raisedBy: JOINED_USER,
+        raisedBy: JOINED_USER.replace("_at_", "@").replace(/ /g, "."),
         text: "Hand raised by student"
       });
     }
