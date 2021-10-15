@@ -17,7 +17,7 @@ const genId = () => {
   return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
 }
 
-const myPeer = new Peer(genId(), {
+const myPeer = new Peer(JOINED_USER, {
   secure: true,
   host: '0.peerjs.com',
   port: '443',
@@ -237,18 +237,34 @@ stopRecord.addEventListener("click", () => {
 
 let classStatusUpdated = false;
 async function updateClassStatus(newStatus) {
-  const classUpdated = await fetch(`https://therightguru.com/api/update-class-status/${ROOM_ID}`, {
-    method: 'PATCH',
-    headers: {
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify({ class_status: newStatus })
-  })
-  
-  if(classUpdated.status == 201) {
-    alert("Class status updated. Now you can end call.");
-    classStatusUpdated = true;
+  if(!ROOM_ID.includes("trial_")) {
+    const classUpdated = await fetch(`https://therightguru.com/api/update-class-status/${ROOM_ID}`, {
+      method: 'PATCH',
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({ class_status: newStatus })
+    })
+    
+    if(classUpdated.status == 201) {
+      alert("Class status updated. Now you can end call.");
+      classStatusUpdated = true;
+    }
+  } else {
+    const classUpdated = await fetch(`https://therightguru.com/api/update-trial-class-status/${ROOM_ID.slice(6)}`, {
+      method: 'PATCH',
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({ class_status: newStatus })
+    })
+    
+    if(classUpdated.status == 201) {
+      alert("Class status updated. Now you can end call.");
+      classStatusUpdated = true;
+    }
   }
+  
 }
 
 // End Call
