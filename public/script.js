@@ -13,7 +13,11 @@ const teacherVideo = document.getElementById('teacher-video')
 //   ],'sdpSemantics': 'unified-plan' }
 // })
 
-const myPeer = new Peer(JOINED_USER, {
+const genId = () => {
+  return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
+}
+
+const myPeer = new Peer(genId(), {
   secure: true,
   host: '0.peerjs.com',
   port: '443',
@@ -279,7 +283,11 @@ window.onload = function() {
 }
 
 const verifyAttendee = () => {
-  fetch(`https://therightguru.com/api/validate-candidate/${ROOM_ID}/${JOINED_USER.replace("_at_", "@").replace(/ /g, ".")}`)
+  if(JOINED_USER.includes("@")) {
+    alert("You are not allowed to join this class. Please refrain from joining this class.")
+    window.location.replace("https://therightguru.com");
+  } else {
+    fetch(`https://therightguru.com/api/validate-candidate/${ROOM_ID}/${JOINED_USER.replace("_at_", "@").replace(/ /g, ".")}`)
     .then(res => res.json())
     .then(data => {
       console.log(data);
@@ -289,6 +297,7 @@ const verifyAttendee = () => {
       }
     })
     .catch(err => console.log(err))
+  }
 }
 
 // JavaScript for chat functionality 
