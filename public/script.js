@@ -307,10 +307,18 @@ const verifyAttendee = () => {
     .then(res => res.json())
     .then(data => {
       console.log(data);
+
       if(data.validated === "false") {
         alert("You are not allowed to join this class. Please refrain from joining this class.")
         window.location.replace("https://therightguru.com");
       }
+      // if(localStorage.getItem("unique") != JOINED_USER.replace("_at_", "@").replace(/ /g, ".").slice(3)) {
+      //   alert("You are not logged into your student portal. Please login to join class.")
+      //   window.location.replace("https://therightguru.com");
+      // } else if(data.validated === "false") {
+      //   alert("You are not allowed to join this class. Please refrain from joining this class.")
+      //   window.location.replace("https://therightguru.com");
+      // }
     })
     .catch(err => console.log(err))
   }
