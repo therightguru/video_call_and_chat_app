@@ -48,6 +48,33 @@
                       color-stop(0.86, rgb(148, 28, 58)));
   }
 
+
+  .teacher-video::-webkit-scrollbar-track
+  {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  }
+
+  .teacher-video::-webkit-scrollbar
+  {
+    height: 10px;
+    background-color: #F5F5F5;
+    border-radius: 10px;
+  }
+
+  .teacher-video::-webkit-scrollbar-thumb
+  {
+    border-radius: 10px;
+    background-image: -webkit-gradient(linear,
+                      left bottom,
+                      right top,
+                      color-stop(0.44, rgb(217, 122, 122)),
+                      color-stop(0.72, rgb(189, 73, 112)),
+                      color-stop(0.86, rgb(148, 28, 58)));
+  }
+
   #main .video-grid {
     position: absolute;
     bottom: 80px;
@@ -91,6 +118,8 @@
     z-index: 100;
     display: flex;
     justify-content: center;
+    transition: 0.4s linear;
+    overflow: auto;    
   }
 
   #main .teacher-video video {
