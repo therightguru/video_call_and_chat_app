@@ -17,7 +17,7 @@ const genId = () => {
   return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
 }
 
-const myPeer = new Peer(genId(), {
+const myPeer = new Peer(JOINED_USER, {
   secure: true,
   host: '0.peerjs.com',
   port: '443',
@@ -237,18 +237,34 @@ stopRecord.addEventListener("click", () => {
 
 let classStatusUpdated = false;
 async function updateClassStatus(newStatus) {
-  const classUpdated = await fetch(`https://therightguru.com/api/update-class-status/${ROOM_ID}`, {
-    method: 'PATCH',
-    headers: {
-      "Content-type": "application/json"
-    },
-    body: JSON.stringify({ class_status: newStatus })
-  })
-  
-  if(classUpdated.status == 201) {
-    alert("Class status updated. Now you can end call.");
-    classStatusUpdated = true;
+  if(!ROOM_ID.includes("trial_")) {
+    const classUpdated = await fetch(`https://therightguru.com/api/update-class-status/${ROOM_ID}`, {
+      method: 'PATCH',
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({ class_status: newStatus })
+    })
+    
+    if(classUpdated.status == 201) {
+      alert("Class status updated. Now you can end call.");
+      classStatusUpdated = true;
+    }
+  } else {
+    const classUpdated = await fetch(`https://therightguru.com/api/update-trial-class-status/${ROOM_ID.slice(6)}`, {
+      method: 'PATCH',
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({ class_status: newStatus })
+    })
+    
+    if(classUpdated.status == 201) {
+      alert("Class status updated. Now you can end call.");
+      classStatusUpdated = true;
+    }
   }
+  
 }
 
 // End Call
@@ -291,10 +307,18 @@ const verifyAttendee = () => {
     .then(res => res.json())
     .then(data => {
       console.log(data);
+
       if(data.validated === "false") {
         alert("You are not allowed to join this class. Please refrain from joining this class.")
         window.location.replace("https://therightguru.com");
       }
+      // if(localStorage.getItem("unique") != JOINED_USER.replace("_at_", "@").replace(/ /g, ".").slice(3)) {
+      //   alert("You are not logged into your student portal. Please login to join class.")
+      //   window.location.replace("https://therightguru.com");
+      // } else if(data.validated === "false") {
+      //   alert("You are not allowed to join this class. Please refrain from joining this class.")
+      //   window.location.replace("https://therightguru.com");
+      // }
     })
     .catch(err => console.log(err))
   }
