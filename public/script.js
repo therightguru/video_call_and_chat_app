@@ -90,7 +90,8 @@ function connectToNewUser(joinedUser, userId, stream) {
   call.on('close', () => {
     video.remove()
   })
-  peers[userId] = { call, joinedUser }
+  peers[userId] = call
+  // peers[userId] = { call, joinedUser }
 }
 
 function addVideoStream(video, stream) {
@@ -137,6 +138,7 @@ document.getElementById("shareScreen")
   .addEventListener("click", function() {
     navigator.mediaDevices.getDisplayMedia({cursor:true})
     .then(screenStream=>{
+      console.log(Object.values(peers))
       Object.values(peers).map(peer => {
         peer.peerConnection?.getSenders().map(sender => {
             if(sender.track.kind == "video") {
