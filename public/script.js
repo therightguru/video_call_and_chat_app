@@ -48,6 +48,7 @@ navigator.mediaDevices.getUserMedia({
   myPeer.on('call', call => {
     call.answer(stream)
     const video = document.createElement('video')
+    video.id = call.metadata.from
     call.on('stream', userVideoStream => {
       console.log("After: ", userVideoStream.getAudioTracks(), userVideoStream.getVideoTracks())
       if(call.metadata.from.includes("TC_")) {
@@ -269,6 +270,15 @@ async function updateClassStatus(newStatus) {
   
 }
 
+// Remove video on direct closing of browser
+window.addEventListener('beforeunload', function(e) {
+  e.preventDefault();
+  socket.emit('removeVideo', {
+    removeUser: JOINED_USER,
+    text: "User closed tab/browser directly"
+  });
+});
+
 // End Call
 document.getElementById("endCall")
   .addEventListener("click", function() {
@@ -447,6 +457,13 @@ socket.on('handRaised', function(message) {
   setTimeout(function(){
     document.getElementById('myPopup').classList.remove('show');
   }, 5000);
+
+})
+
+socket.on('videoRemoved', function(message){
+
+  const video = document.getElementById(message.removeUser)
+  video.remove()
 
 })
 

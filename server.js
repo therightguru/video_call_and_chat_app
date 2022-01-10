@@ -57,7 +57,7 @@ io.on('connection', socket => {
     var user = users.getUser(socket.id);
 
     if(user && isRealString(message.text)){
-        io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));//emits an event to every connectione
+        io.to(user.room).emit('newMessage', generateMessage(user.name, message.text));//emits an event to every connection
     }
 
     callback();
@@ -67,7 +67,15 @@ io.on('connection', socket => {
     var user = users.getUser(socket.id);
 
     if(user && isRealString(message.text)) {
-      io.to(user.room).emit('handRaised', `Hand raised by ${message.raisedBy}`);//emits an event to every connectione
+      io.to(user.room).emit('handRaised', `Hand raised by ${message.raisedBy}`);//emits an event to every connection
+    }
+  })
+
+  socket.on('removeVideo', (message) => {
+    var user = users.getUser(socket.id);
+
+    if(user && isRealString(message.text)) {
+      io.to(user.room).emit('videoRemoved', {removeFor: user.name, removeUser: message.removeUser}); //emits an event to every connection
     }
   })
 
