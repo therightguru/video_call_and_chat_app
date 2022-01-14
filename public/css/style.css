@@ -7,8 +7,7 @@
   }
 
   html, body {
-    height: 100vh;
-    height: calc(var(--vh, 1vh) * 100);
+    height: 100%;
     width: 100%;
     overflow: hidden;
     position: fixed;
@@ -21,7 +20,7 @@
     height: calc(var(--vh, 1vh) * 100);
     width: 100%;
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .video-grid::-webkit-scrollbar-track
