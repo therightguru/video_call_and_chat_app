@@ -524,12 +524,12 @@
     #main .teacher-video {
       width: 100%;
       height: 360px;
-      top: 100px;
+      top: 80px;
     }
   
     #main .teacher-video video {
-      width: 70%;
-      height: 80%;
+      width: 80%;
+      height: 90%;
     }
 
     .mobile_button1 {
