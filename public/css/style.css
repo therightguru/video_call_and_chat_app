@@ -17,9 +17,10 @@
 
   .site-wrapper {
     height: 100%;
+    height: calc(var(--vh, 1vh) * 100);
     width: 100%;
     position: relative;
-    overflow: auto;
+    overflow: hidden;
   }
 
   .video-grid::-webkit-scrollbar-track
