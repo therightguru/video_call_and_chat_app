@@ -53,7 +53,7 @@ navigator.mediaDevices.getUserMedia({
   myPeer.on('call', call => {
     call.answer(stream)
     const video = document.createElement('video')
-    video.id = call.metadata.from
+    video.id = call.metadata.from.replace("%20", " ")
     call.on('stream', userVideoStream => {
       console.log("After: ", userVideoStream.getAudioTracks(), userVideoStream.getVideoTracks())
       if(call.metadata.from.includes("TC_")) {
@@ -86,6 +86,7 @@ myPeer.on('open', id => {
 function connectToNewUser(joinedUser, userId, stream) {
   const call = myPeer.call(userId, stream, {metadata: {"from": window.location.href.split("&")[1]}})
   const video = document.createElement('video')
+  video.id = joinedUser
   call.on('stream', userVideoStream => {
     if(joinedUser.includes("TC_")){
       addVideoStreamTeacher(video, userVideoStream)
@@ -466,7 +467,6 @@ socket.on('handRaised', function(message) {
 })
 
 socket.on('videoRemoved', function(message){
-
   const video = document.getElementById(message.removeUser)
   video.remove()
 
