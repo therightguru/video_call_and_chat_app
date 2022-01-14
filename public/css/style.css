@@ -512,12 +512,12 @@
 
     #main .video-grid {
       bottom: 100px;
-      height: 116px;
+      height: 240px;
     }
       
     #main .video-grid video {
-      width: 140px;
-      height: 100px;
+      width: 240px;
+      height: 200px;
       margin-right: 25px;
     }
 
@@ -528,8 +528,8 @@
     }
   
     #main .teacher-video video {
-      width: 95%;
-      height: 100%;
+      width: 70%;
+      height: 80%;
     }
 
     .mobile_button1 {
