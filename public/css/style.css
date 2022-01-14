@@ -8,6 +8,7 @@
 
   html, body {
     height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
     width: 100%;
     overflow: hidden;
     position: fixed;
@@ -516,8 +517,8 @@
     }
       
     #main .video-grid video {
-      width: 160px;
-      height: 110px;
+      width: 140px;
+      height: 100px;
       margin-right: 25px;
     }
 
