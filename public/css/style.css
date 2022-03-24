@@ -510,6 +510,10 @@
       transition: all ease-in 0.5s;
     }    
 
+    /* .icons2 #shareScreen {
+      display: none;
+    } */
+
     #main .video-grid {
       bottom: 100px;
       height: 240px;
@@ -528,7 +532,7 @@
     }
   
     #main .teacher-video video {
-      width: 80%;
+      width: 95%;
       height: 90%;
     }
 

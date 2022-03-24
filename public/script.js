@@ -1,17 +1,6 @@
 const socket = io('/')
 const videoGrid = document.getElementById('video-grid')
 const teacherVideo = document.getElementById('teacher-video')
-// const myPeer = new Peer(JOINED_USER, {
-//   // secure: true,
-//   // host: 'peerjs-server.herokuapp.com',
-//   host: '/',
-//   port: '5050',
-//   path: '/peerjs/trg',
-//   config: { 'iceServers': [
-//     { 'urls': 'stun:stun.therightguru.com:3478' },
-//     { 'urls': 'turn:turn.therightguru.com:3478', 'username': 'admin', 'credential': 'therightguru' }
-//   ],'sdpSemantics': 'unified-plan' }
-// })
 
 // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
 let vh = window.innerHeight * 0.01;
@@ -22,9 +11,19 @@ const genId = () => {
   return Math.floor(Math.random() * Math.floor(Math.random() * Date.now()))
 }
 
+// const myPeer = new Peer(JOINED_USER, {
+//   secure: true,
+//   host: '0.peerjs.com',
+//   port: '443',
+//   config: { 'iceServers': [
+//     { 'urls': 'stun:stun.therightguru.com:3478' },
+//     { 'urls': 'turn:turn.therightguru.com:3478', 'username': 'admin', 'credential': 'therightguru' }
+//   ],'sdpSemantics': 'unified-plan' }
+// })
+
 const myPeer = new Peer(JOINED_USER, {
   secure: true,
-  host: '0.peerjs.com',
+  host: 'trg-live-class.peerjs.com',
   port: '443',
   config: { 'iceServers': [
     { 'urls': 'stun:stun.therightguru.com:3478' },
