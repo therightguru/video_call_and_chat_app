@@ -23,7 +23,7 @@ const genId = () => {
 
 const myPeer = new Peer(JOINED_USER, {
   secure: true,
-  host: 'trg-live-class.peerjs.com',
+  host: 'trg-live-class.herokuapp.com/',
   port: '443',
   config: { 'iceServers': [
     { 'urls': 'stun:stun.therightguru.com:3478' },
