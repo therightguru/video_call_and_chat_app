@@ -21,7 +21,7 @@ const getPresignedUrl = (req, res) => {
   const fileName = uuidV4();
   const s3Params = {
     Bucket: S3_BUCKET,
-    Key: "student-assignments/" + fileName + "." + fileType,
+    Key: "mobile_uploads/" + fileName + "." + fileType,
     // Expires: 60 * 60,
     ContentType: "application/" + fileType,
     ACL: "public-read",
@@ -37,7 +37,7 @@ const getPresignedUrl = (req, res) => {
       message: "Url generated",
       uploadUrl: data,
       downloadUrl:
-        `https://${S3_BUCKET}.s3.amazonaws.com/student-assignments/${fileName}` + "." + fileType,
+        `https://${S3_BUCKET}.s3.amazonaws.com/mobile_uploads/${fileName}` + "." + fileType,
     };
     return res.status(201).json(returnData);
   });
